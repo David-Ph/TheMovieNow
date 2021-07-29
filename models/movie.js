@@ -32,8 +32,8 @@ const movie = new mongoose.Schema(
       type: String,
       required: true,
     },
-    total: {
-      type: Number,
+    synopsis: {
+      type: String,
       required: true,
     },
   },
