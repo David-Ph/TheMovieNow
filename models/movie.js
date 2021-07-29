@@ -31,10 +31,25 @@ const movie = new mongoose.Schema(
     title: {
       type: String,
       required: true,
+      unique: true,
     },
     synopsis: {
       type: String,
       required: true,
+    },
+    trailer: {
+      type: String, // url format
+      required: false,
+    },
+    posterImage: {
+      type: String,
+      required: false,
+      default: "i.imgur.com/hXgKBGQ.jpg",
+    },
+    releaseDate: {
+      type: Date,
+      required: false,
+      default: "1970-01-01",
     },
   },
   {
