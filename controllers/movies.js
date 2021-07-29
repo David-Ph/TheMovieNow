@@ -3,7 +3,7 @@ const { Movie } = require("../models");
 class MovieController {
   async getAllMovies(req, res, next) {
     try {
-      const data = await Movie.find().populate("categories");
+      let data = await Movie.find(); //.populate("categories", "tag -_id");
       if (data.length === 0) {
         return next({ message: "Movie not found", statusCode: 404 });
       }

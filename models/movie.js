@@ -12,10 +12,15 @@ const movieSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    // categories: [
+    //   {
+    //     type: mongoose.Schema.Types.ObjectId,
+    //     ref: "Category",
+    //   },
+    // ],
     categories: [
       {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Category",
+        type: String,
       },
     ],
     trailer: {
@@ -26,7 +31,7 @@ const movieSchema = new mongoose.Schema(
       type: String,
       required: false,
       get: getImage,
-      default: "i.imgur.com/hXgKBGQ.jpg",
+      default: "https://i.imgur.com/hXgKBGQ.jpg",
     },
     releaseDate: {
       type: Date,
