@@ -9,6 +9,7 @@ const app = express();
 
 // ? import routes
 // ////////////////
+const categoryRouter = require("./routes/categories");
 
 // ? import error handler
 // //////////////////////
@@ -23,6 +24,7 @@ app.use(fileUpload());
 
 // ? set routes
 // /////////////
+app.use("/categories", categoryRouter);
 
 app.all("*", async (req, res, next) => {
   try {

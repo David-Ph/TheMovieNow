@@ -17,7 +17,14 @@ const categorySchema = new mongoose.Schema(
   }
 );
 
-// Enable soft delete, it will make delete column automaticly
-movieSchema.plugin(mongooseDelete, { overrideMethods: "all" });
+categorySchema.virtual("movies", {
+  ref: "Movie",
+  localField: "_id",
+  foreignField: "categories",
+  justOne: false,
+});
 
-module.exports = mongoose.model("category", categorySchema);
+// Enable soft delete, it will make delete column automaticly
+categorySchema.plugin(mongooseDelete, { overrideMethods: "all" });
+
+module.exports = mongoose.model("Category", categorySchema);
