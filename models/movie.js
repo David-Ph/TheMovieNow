@@ -1,33 +1,8 @@
 const mongoose = require("mongoose");
 const mongooseDelete = require("mongoose-delete");
 
-/* 
-movieSchema: {
-  title: String,
-  synopsis: String,
-  category: String,
-  trailer: String, // youtube url
-  posterImage: String,
-  reviews: [String], // array of reviews object
-  releaseDate: Date,
-  director: String,
-  budget: Number,
-  featuredSong: String,
-  avgRating: Number
-}
-*/
-
-const movie = new mongoose.Schema(
+const movieSchema = new mongoose.Schema(
   {
-    // good: {
-    //   type: mongoose.Schema.Types.Mixed,
-    //   required: true,
-    // },
-    // customer: {
-    //   type: mongoose.Schema.Types.ObjectId,
-    //   required: true,
-    //   ref: "customer",
-    // },
     title: {
       type: String,
       required: true,
@@ -84,15 +59,15 @@ const movie = new mongoose.Schema(
   }
 );
 
-function getPhoto(photo) {
-  if (!photo || photo.includes("https") || photo.includes("http")) {
-    return photo;
+function getImage(image) {
+  if (!image || image.includes("https") || image.includes("http")) {
+    return image;
   }
 
-  return `/images/posters/${photo}`;
+  return `/images/posters/${image}`;
 }
 
 // Enable soft delete, it will make delete column automaticly
 movieSchema.plugin(mongooseDelete, { overrideMethods: "all" });
 
-module.exports = mongoose.model("movie", movieSchema); // Export transaction models
+module.exports = mongoose.model("Movie", movieSchema); // Export transaction models

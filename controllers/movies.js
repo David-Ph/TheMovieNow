@@ -5,7 +5,7 @@ class MovieController {
     try {
       const data = await Movie.find();
       if (data.length === 0) {
-        return next({ message: "Categories not found", statusCode: 404 });
+        return next({ message: "Movie not found", statusCode: 404 });
       }
 
       res.status(200).json({ data });
