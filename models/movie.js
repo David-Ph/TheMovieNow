@@ -37,6 +37,12 @@ const movie = new mongoose.Schema(
       type: String,
       required: true,
     },
+    categories: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Category",
+      },
+    ],
     trailer: {
       type: String, // url format
       required: false,
@@ -44,12 +50,29 @@ const movie = new mongoose.Schema(
     posterImage: {
       type: String,
       required: false,
+      get: getImage,
       default: "i.imgur.com/hXgKBGQ.jpg",
     },
     releaseDate: {
       type: Date,
       required: false,
       default: "1970-01-01",
+    },
+    director: {
+      type: String,
+      required: false,
+    },
+    budget: {
+      type: Number,
+      required: false,
+    },
+    featuredSong: {
+      type: String,
+      required: false,
+    },
+    avgRating: {
+      type: Number,
+      required: false,
     },
   },
   {
@@ -60,6 +83,14 @@ const movie = new mongoose.Schema(
     },
   }
 );
+
+function getPhoto(photo) {
+  if (!photo || photo.includes("https") || photo.includes("http")) {
+    return photo;
+  }
+
+  return `/images/posters/${photo}`;
+}
 
 // Enable soft delete, it will make delete column automaticly
 movieSchema.plugin(mongooseDelete, { overrideMethods: "all" });

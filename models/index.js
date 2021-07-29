@@ -14,3 +14,4 @@ const uri = mongoose
   .catch((err) => console.log(err));
 
 exports.Category = require("./category");
+exports.Movie = require("./movie");
