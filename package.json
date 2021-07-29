@@ -4,7 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "NODE_ENV=development node app.js",
+    "nodemon": "NODE_ENV=development nodemon app.js",
+    "seed:dev": "NODE_ENV=development node seeders add",
+    "seed:dev:remove": "NODE_ENV=development node seeders remove"
   },
   "repository": {
     "type": "git",
