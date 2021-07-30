@@ -12,7 +12,7 @@ const MovieController = require("../controllers/movies");
 // //////////////
 router.get("/", MovieController.getAllMovies);
 router.get("/title", MovieController.getMoviesByTitle);
-router.get("/categories", MovieController.getMoviesByCategory);
+router.get("/categories/:tag", MovieController.getMoviesByCategory);
 router.get("/categories/all", MovieController.getAllCategories);
 router.get("/:id", MovieController.getMovieById);
 

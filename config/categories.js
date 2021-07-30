@@ -1,10 +1,10 @@
 const categories = [
-  "Action",
-  "Adventure",
-  "Anime",
-  "Comedy",
-  "Horror",
-  "Romance",
+  "action",
+  "adventure",
+  "anime",
+  "comedy",
+  "horror",
+  "romance",
 ];
 
 module.exports = categories;

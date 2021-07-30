@@ -1,14 +1,6 @@
 const faker = require("faker");
 const { Movie } = require("../models");
-
-const categoriesArray = [
-  "Action",
-  "Adventure",
-  "Anime",
-  "Comedy",
-  "Horror",
-  "Romance",
-];
+const categoriesArray = require("../config/categories");
 
 // seeder add
 async function addMovies() {

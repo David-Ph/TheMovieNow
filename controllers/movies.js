@@ -33,7 +33,15 @@ class MovieController {
 
   async getMoviesByCategory(req, res, next) {
     try {
-      console.log(req.query);
+      const category = req.params.tag;
+
+      const data = await Movie.find({ categories: category });
+
+      if (data.length === 0) {
+        return next({ message: "Movie not found", statusCode: 404 });
+      }
+
+      res.status(200).json({ data });
     } catch (error) {
       next(error);
     }
