@@ -12,12 +12,6 @@ const movieSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    // categories: [
-    //   {
-    //     type: mongoose.Schema.Types.ObjectId,
-    //     ref: "Category",
-    //   },
-    // ],
     categories: [
       {
         type: String,

@@ -62,6 +62,23 @@ class MovieController {
       next(error);
     }
   }
+
+  async getAllCategories(req, res, next) {
+    try {
+      const categories = [
+        "Action",
+        "Adventure",
+        "Anime",
+        "Comedy",
+        "Horror",
+        "Romance",
+      ];
+
+      res.status(200).json({ categories });
+    } catch (error) {
+      next(error);
+    }
+  }
 }
 
 module.exports = new MovieController();

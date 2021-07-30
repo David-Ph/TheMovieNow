@@ -13,5 +13,4 @@ const uri = mongoose
   .then(() => console.log("MongoDB Connected"))
   .catch((err) => console.log(err));
 
-exports.Category = require("./category");
 exports.Movie = require("./movie");
