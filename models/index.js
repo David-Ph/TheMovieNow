@@ -13,4 +13,8 @@ const uri = mongoose
   .then(() => console.log("MongoDB Connected"))
   .catch((err) => console.log(err));
 
+<<<<<<< HEAD
 exports.user = require("./user");
+=======
+exports.Movie = require("./movie");
+>>>>>>> bb10d3c9a76f0f23297212bbe6a9636aa4b560c6
