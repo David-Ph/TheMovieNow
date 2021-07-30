@@ -1,4 +1,5 @@
 const { Movie } = require("../models");
+const categories = require("../config/categories");
 
 class MovieController {
   async getAllMovies(req, res, next) {
@@ -9,6 +10,52 @@ class MovieController {
       }
 
       res.status(200).json({ data });
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  async getMovieById(req, res, next) {
+    try {
+      let data = await Movie.findOne({
+        _id: req.params.id,
+      }).populate("reviews");
+
+      if (!data) {
+        return next({ statusCode: 404, message: "Movie not found" });
+      }
+
+      res.status(200).json({ data });
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  async getMoviesByCategory(req, res, next) {
+    try {
+      const category = req.params.tag;
+
+      const data = await Movie.find({ categories: category });
+
+      if (data.length === 0) {
+        return next({ message: "Movie not found", statusCode: 404 });
+      }
+
+      res.status(200).json({ data });
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  async getMoviesByTitle(req, res, next) {
+    try {
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  async getMoviesByPage(req, res, next) {
+    try {
     } catch (error) {
       next(error);
     }
@@ -65,14 +112,14 @@ class MovieController {
 
   async getAllCategories(req, res, next) {
     try {
-      const categories = [
-        "Action",
-        "Adventure",
-        "Anime",
-        "Comedy",
-        "Horror",
-        "Romance",
-      ];
+      // const categories = [
+      //   "Action",
+      //   "Adventure",
+      //   "Anime",
+      //   "Comedy",
+      //   "Horror",
+      //   "Romance",
+      // ];
 
       res.status(200).json({ categories });
     } catch (error) {

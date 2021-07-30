@@ -11,7 +11,11 @@ const MovieController = require("../controllers/movies");
 // ? set routers
 // //////////////
 router.get("/", MovieController.getAllMovies);
-router.get("/categories", MovieController.getAllCategories);
+router.get("/title", MovieController.getMoviesByTitle);
+router.get("/categories/:tag", MovieController.getMoviesByCategory);
+router.get("/categories/all", MovieController.getAllCategories);
+router.get("/:id", MovieController.getMovieById);
+
 router.post("/", MovieController.createMovie);
 router.put("/:id", MovieController.updateMovie);
 router.delete("/:id", MovieController.deleteMovie);
