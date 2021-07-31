@@ -21,7 +21,7 @@ async function addMovies() {
 
     let movie = await Movie.create({
       title: faker.name.findName(),
-      synopsis: faker.lorem.text(),
+      synopsis: faker.lorem.words(50),
       categories: uniqueCategories,
       trailer: "https://youtube.com",
       releaseDate: faker.date.past(),
