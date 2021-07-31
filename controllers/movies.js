@@ -4,7 +4,7 @@ const categories = require("../config/categories");
 class MovieController {
   async getAllMovies(req, res, next) {
     try {
-      let data = await Movie.find(); //.populate("categories", "tag -_id");
+      let data = await Movie.find();
       if (data.length === 0) {
         return next({ message: "Movie not found", statusCode: 404 });
       }
@@ -17,14 +17,16 @@ class MovieController {
 
   async getMoviesByPage(req, res, next) {
     try {
+      // get the page, limit, and movies to skip based on page
       const page = req.query.page;
-      const limit = 3;
+      const limit = 15;
       const skipCount = page > 0 ? (page - 1) * limit : 0;
 
       const data = await Movie.find()
         .sort({ title: 1 })
         .limit(limit)
         .skip(skipCount);
+
       if (data.length === 0) {
         return next({ message: "Movie not found", statusCode: 404 });
       }
@@ -39,13 +41,13 @@ class MovieController {
     try {
       let data = await Movie.findOne({
         _id: req.params.id,
-      }); //.populate("reviews");
+      });
 
       if (!data) {
         return next({ statusCode: 404, message: "Movie not found" });
       }
 
-      res.status(200).json({ data });
+      res.status(200).json({ data, message: "Movie found!" });
     } catch (error) {
       next(error);
     }
@@ -54,7 +56,7 @@ class MovieController {
   async getMoviesByCategory(req, res, next) {
     try {
       const category = req.params.tag;
-
+      // only find movies that has the category from req.params.tag
       const data = await Movie.find({ categories: category });
 
       if (data.length === 0) {
@@ -70,6 +72,8 @@ class MovieController {
   async getMoviesByTitle(req, res, next) {
     try {
       const searchQuery = req.query.title;
+      // look for movies by title
+      // use case insensitive regex to find it
       const data = await Movie.find({ title: new RegExp(searchQuery, "i") });
       if (data.length === 0) {
         return next({ message: "Movie not found", statusCode: 404 });
