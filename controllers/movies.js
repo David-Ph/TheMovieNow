@@ -69,6 +69,13 @@ class MovieController {
 
   async getMoviesByTitle(req, res, next) {
     try {
+      const searchQuery = req.query.title;
+      const data = await Movie.find({ title: new RegExp(searchQuery, "i") });
+      if (data.length === 0) {
+        return next({ message: "Movie not found", statusCode: 404 });
+      }
+
+      res.status(200).json({ data });
     } catch (error) {
       next(error);
     }
