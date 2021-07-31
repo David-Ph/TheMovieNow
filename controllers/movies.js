@@ -47,7 +47,7 @@ class MovieController {
         return next({ statusCode: 404, message: "Movie not found" });
       }
 
-      res.status(200).json({ data });
+      res.status(200).json({ data, message: "Movie found!" });
     } catch (error) {
       next(error);
     }

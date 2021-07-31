@@ -57,7 +57,7 @@ exports.movieValidator = async (req, res, next) => {
         errorMessages.push("Image must be less than 1MB");
       }
 
-      file.name = new Date().getTime() + "_" + file.name;
+      file.name = (new Date().getTime() + "_" + file.name).replace(/\s/g, "");
 
       const move = promisify(file.mv);
 

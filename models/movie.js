@@ -51,6 +51,8 @@ const movieSchema = new mongoose.Schema(
       createdAt: "createdAt",
       updatedAt: "updatedAt",
     },
+    toObject: { getters: true },
+    toJSON: { getters: true },
   }
 );
 
@@ -66,7 +68,7 @@ function getImage(image) {
     return image;
   }
 
-  return `/images/posters/${image}`;
+  return `/posters/${image}`;
 }
 
 // Enable soft delete, it will make delete column automaticly
