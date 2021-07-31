@@ -44,10 +44,6 @@ const movieSchema = new mongoose.Schema(
       type: String,
       required: false,
     },
-    avgRating: {
-      type: Number,
-      required: false,
-    },
   },
   {
     // Enables timestamps

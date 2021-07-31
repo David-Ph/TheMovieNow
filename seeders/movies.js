@@ -28,7 +28,6 @@ async function addMovies() {
       director: faker.name.findName(),
       budget: faker.commerce.price(),
       featuredSong: faker.name.findName(),
-      avgRating: Math.floor(Math.random() * 5 + 1),
     });
   }
   console.log("Movies has been seeded");
