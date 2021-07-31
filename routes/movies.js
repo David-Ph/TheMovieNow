@@ -7,6 +7,7 @@ const MovieController = require("../controllers/movies");
 
 // ? import validators
 // ////////////////////
+const { movieValidator } = require("../middlewares/validators/movies");
 
 // ? set routers
 // //////////////
@@ -17,8 +18,8 @@ router.get("/categories/:tag", MovieController.getMoviesByCategory);
 router.get("/categories/all", MovieController.getAllCategories);
 router.get("/:id", MovieController.getMovieById);
 
-router.post("/", MovieController.createMovie);
-router.put("/:id", MovieController.updateMovie);
+router.post("/", movieValidator, MovieController.createMovie);
+router.put("/:id", movieValidator, MovieController.updateMovie);
 router.delete("/:id", MovieController.deleteMovie);
 
 // ? export router
