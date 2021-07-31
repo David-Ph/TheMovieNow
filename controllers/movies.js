@@ -15,11 +15,31 @@ class MovieController {
     }
   }
 
+  async getMoviesByPage(req, res, next) {
+    try {
+      const page = req.query.page;
+      const limit = 3;
+      const skipCount = page > 0 ? (page - 1) * limit : 0;
+
+      const data = await Movie.find()
+        .sort({ title: 1 })
+        .limit(limit)
+        .skip(skipCount);
+      if (data.length === 0) {
+        return next({ message: "Movie not found", statusCode: 404 });
+      }
+
+      res.status(200).json({ data });
+    } catch (error) {
+      next(error);
+    }
+  }
+
   async getMovieById(req, res, next) {
     try {
       let data = await Movie.findOne({
         _id: req.params.id,
-      }).populate("reviews");
+      }); //.populate("reviews");
 
       if (!data) {
         return next({ statusCode: 404, message: "Movie not found" });
@@ -49,13 +69,13 @@ class MovieController {
 
   async getMoviesByTitle(req, res, next) {
     try {
-    } catch (error) {
-      next(error);
-    }
-  }
+      const searchQuery = req.query.title;
+      const data = await Movie.find({ title: new RegExp(searchQuery, "i") });
+      if (data.length === 0) {
+        return next({ message: "Movie not found", statusCode: 404 });
+      }
 
-  async getMoviesByPage(req, res, next) {
-    try {
+      res.status(200).json({ data });
     } catch (error) {
       next(error);
     }
@@ -112,15 +132,6 @@ class MovieController {
 
   async getAllCategories(req, res, next) {
     try {
-      // const categories = [
-      //   "Action",
-      //   "Adventure",
-      //   "Anime",
-      //   "Comedy",
-      //   "Horror",
-      //   "Romance",
-      // ];
-
       res.status(200).json({ categories });
     } catch (error) {
       next(error);
