@@ -1,5 +1,6 @@
 const faker = require("faker");
 const { Movie } = require("../models");
+const { posters } = require("../config/moviesInfo");
 const categoriesArray = require("../config/categories");
 
 /* 
@@ -19,6 +20,8 @@ async function addMovies() {
       ])
     );
 
+    const randomPosters = posters[Math.floor(Math.random() * posters.length)];
+
     let movie = await Movie.create({
       title: faker.name.findName(),
       synopsis: faker.lorem.words(50),
@@ -28,6 +31,7 @@ async function addMovies() {
       director: faker.name.findName(),
       budget: faker.commerce.price(),
       featuredSong: faker.name.findName(),
+      posterImage: randomPosters,
     });
   }
   console.log("Movies has been seeded");

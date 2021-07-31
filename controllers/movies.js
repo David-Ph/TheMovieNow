@@ -4,7 +4,7 @@ const categories = require("../config/categories");
 class MovieController {
   async getAllMovies(req, res, next) {
     try {
-      let data = await Movie.find();
+      let data = await Movie.find().sort({ title: 1 });
       if (data.length === 0) {
         return next({ message: "Movie not found", statusCode: 404 });
       }
