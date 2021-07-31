@@ -56,13 +56,6 @@ const movieSchema = new mongoose.Schema(
   }
 );
 
-movieSchema.virtual("reviews", {
-  ref: "Review",
-  localField: "_id",
-  foreignField: "movie_id",
-  justOne: false,
-});
-
 function getImage(image) {
   if (!image || image.includes("https") || image.includes("http")) {
     return image;
