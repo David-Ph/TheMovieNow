@@ -19,7 +19,7 @@ class MovieController {
     try {
       // get the page, limit, and movies to skip based on page
       const page = req.query.page;
-      const limit = 15;
+      const limit = parseInt(req.query.limit) || 15;
       const skipCount = page > 0 ? (page - 1) * limit : 0;
 
       const data = await Movie.find()
@@ -58,7 +58,7 @@ class MovieController {
       const category = req.params.tag;
       // get the page, limit, and movies to skip based on page
       const page = req.query.page;
-      const limit = 15;
+      const limit = parseInt(req.query.limit) || 15;
       const skipCount = page > 0 ? (page - 1) * limit : 0;
       // only find movies that has the category from req.params.tag
       const data = await Movie.find({ categories: category })
@@ -81,7 +81,7 @@ class MovieController {
       const searchQuery = req.query.title;
       // get the page, limit, and movies to skip based on page
       const page = req.query.page;
-      const limit = 15;
+      const limit = parseInt(req.query.limit) || 15;
       const skipCount = page > 0 ? (page - 1) * limit : 0;
       // look for movies by title
       // use case insensitive regex to find it
