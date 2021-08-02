@@ -5,7 +5,9 @@ const { user } = require("../models");
 async function addUsers() {
   for (let i = 0; i < 10; i++) {
     await user.create({
-      name: faker.name.findName(),
+      fullname: faker.name.findName(),
+      email: faker.internet.email(),
+      password: "Oke12345!",
     });
   }
   console.log("Users has been seeded");
