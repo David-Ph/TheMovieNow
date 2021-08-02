@@ -6,6 +6,8 @@ async function addUsers() {
   for (let i = 0; i < 10; i++) {
     await user.create({
       fullname: faker.name.findName(),
+      email: faker.internet.email(),
+      password: "Oke12345!",
     });
   }
   console.log("Users has been seeded");
