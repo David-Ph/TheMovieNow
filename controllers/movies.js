@@ -4,7 +4,11 @@ const categories = require("../config/categories");
 class MovieController {
   async getAllMovies(req, res, next) {
     try {
-      let data = await Movie.find().sort({ title: 1 });
+      const sortField = req.query.sort_by || "releaseDate";
+      const sortOrder = req.query.sort_order || "desc";
+
+      let data = await Movie.find().sort({ [sortField]: sortOrder });
+
       if (data.length === 0) {
         return next({ message: "Movie not found", statusCode: 404 });
       }
@@ -19,11 +23,14 @@ class MovieController {
     try {
       // get the page, limit, and movies to skip based on page
       const page = req.query.page;
-      const limit = 15;
+      const limit = parseInt(req.query.limit) || 15;
       const skipCount = page > 0 ? (page - 1) * limit : 0;
 
+      const sortField = req.query.sort_by || "releaseDate";
+      const sortOrder = req.query.sort_order || "desc";
+
       const data = await Movie.find()
-        .sort({ title: 1 })
+        .sort({ [sortField]: sortOrder })
         .limit(limit)
         .skip(skipCount);
 
@@ -58,11 +65,15 @@ class MovieController {
       const category = req.params.tag;
       // get the page, limit, and movies to skip based on page
       const page = req.query.page;
-      const limit = 15;
+      const limit = parseInt(req.query.limit) || 15;
       const skipCount = page > 0 ? (page - 1) * limit : 0;
+
+      const sortField = req.query.sort_by || "releaseDate";
+      const sortOrder = req.query.sort_order || "desc";
+
       // only find movies that has the category from req.params.tag
       const data = await Movie.find({ categories: category })
-        .sort({ title: 1 })
+        .sort({ [sortField]: sortOrder })
         .limit(limit)
         .skip(skipCount);
 
@@ -81,12 +92,16 @@ class MovieController {
       const searchQuery = req.query.title;
       // get the page, limit, and movies to skip based on page
       const page = req.query.page;
-      const limit = 15;
+      const limit = parseInt(req.query.limit) || 15;
       const skipCount = page > 0 ? (page - 1) * limit : 0;
+
+      const sortField = req.query.sort_by || "releaseDate";
+      const sortOrder = req.query.sort_order || "desc";
+
       // look for movies by title
       // use case insensitive regex to find it
       const data = await Movie.find({ title: new RegExp(searchQuery, "i") })
-        .sort({ title: 1 })
+        .sort({ [sortField]: sortOrder })
         .limit(limit)
         .skip(skipCount);
       if (data.length === 0) {
