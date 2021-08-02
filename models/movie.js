@@ -44,10 +44,6 @@ const movieSchema = new mongoose.Schema(
       type: String,
       required: false,
     },
-    avgRating: {
-      type: Number,
-      required: false,
-    },
   },
   {
     // Enables timestamps
@@ -55,22 +51,17 @@ const movieSchema = new mongoose.Schema(
       createdAt: "createdAt",
       updatedAt: "updatedAt",
     },
+    toObject: { getters: true },
+    toJSON: { getters: true },
   }
 );
-
-movieSchema.virtual("reviews", {
-  ref: "Review",
-  localField: "_id",
-  foreignField: "movie_id",
-  justOne: false,
-});
 
 function getImage(image) {
   if (!image || image.includes("https") || image.includes("http")) {
     return image;
   }
 
-  return `/images/posters/${image}`;
+  return `/posters/${image}`;
 }
 
 // Enable soft delete, it will make delete column automaticly
