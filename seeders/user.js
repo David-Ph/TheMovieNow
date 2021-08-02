@@ -7,6 +7,7 @@ async function addUsers() {
     await user.create({
       fullname: faker.name.findName(),
       email: faker.internet.email(),
+      photo: faker.image.imageUrl(),
       password: "Oke12345!",
     });
   }
