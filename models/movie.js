@@ -16,6 +16,11 @@ const movieSchema = new mongoose.Schema(
         type: String,
       },
     ],
+    casts: [
+      {
+        type: String,
+      },
+    ],
     trailer: {
       type: String, // url format
       required: false,

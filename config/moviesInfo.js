@@ -47,3 +47,55 @@ exports.titles = [
   "3 Idiots",
   "Toy Story",
 ];
+
+exports.actors = [
+  {
+    name: "Robert Downey Jr",
+    photoURL:
+      "https://i.pinimg.com/originals/8e/21/29/8e2129f44804db65316ed3db92cf8552.jpg",
+  },
+  {
+    name: "Chris Hemsworth",
+    photoURL:
+      "https://upload.wikimedia.org/wikipedia/commons/e/e8/Chris_Hemsworth_by_Gage_Skidmore_2_%28cropped%29.jpg",
+  },
+  {
+    name: "Chaeyoung",
+    photoURL:
+      "https://www.wowkeren.com/display/images/photo/2020/06/11/00314930.jpg",
+  },
+  {
+    name: "Mina",
+    photoURL:
+      "https://blue.kumparan.com/image/upload/fl_progressive,fl_lossy,c_fill,q_auto:best,w_640/v1605186404/xsc0bogbnb3gybcduxkd.jpg",
+  },
+  {
+    name: "Matt Bomer",
+    photoURL:
+      "https://y.gtimg.cn/music/photo_new/T001R500x500M000000v6HwQ3UDfQZ.jpg",
+  },
+  {
+    name: "Jeon Mi Do",
+    photoURL:
+      "https://awsimages.detik.net.id/community/media/visual/2021/07/03/jeon-mi-do-pemain-hospital-playlist-2_43.jpeg?w=700&q=90",
+  },
+  {
+    name: "IU",
+    photoURL: "https://i.mydramalist.com/qRVoD_5f.jpg",
+  },
+  {
+    name: "Anthony Starr",
+    photoURL:
+      "https://upload.wikimedia.org/wikipedia/commons/6/63/Antony_Starr_%28cropped%29.jpg",
+  },
+  {
+    name: "Tom Holland",
+    photoURL:
+      "https://cdns.klimg.com/merdeka.com/i/w/news/2020/04/03/1163135/540x270/corona-merebak-tom-holland-malah-ingin-pergi-ke-bali.jpg",
+  },
+  {
+    name: "Jung Eun Ji",
+    photoURL:
+      "https://1.bp.blogspot.com/-Zfnk-GRRxmw/W3uI1xLrayI/AAAAAAAATmU/L9PLMww-F74jV1OBo1kPsFT2N0buRCH4QCLcBGAs/s1600/eunji.jpg",
+  },
+];
