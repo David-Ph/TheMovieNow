@@ -9,7 +9,6 @@ const app = express();
 
 // ? import routes
 // ////////////////
-const movieRouter = require("./routes/movies");
 const userRouter = require("./routes/user");
 const reviews = require("./routes/reviews");
 
@@ -26,7 +25,6 @@ app.use(fileUpload());
 
 // ? set routes
 // /////////////
-app.use("/movies", movieRouter);
 app.use("/user", userRouter);
 app.use("/reviews", reviews);
 

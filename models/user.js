@@ -8,7 +8,6 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: true,
       minlength: 3,
-      maxlength: 50,
     },
     email: {
       type: String,
@@ -24,6 +23,8 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: false,
       get: getPhoto,
+      default:
+        "https://www.personality-insights.com/wp-content/uploads/2017/12/default-profile-pic-e1513291410505.jpg",
     },
     role: {
       type: String,
