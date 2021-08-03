@@ -11,11 +11,13 @@ exports.queryMovieValidator = async (req, res, next) => {
   try {
     const errorMessages = [];
 
-    if (req.query.limit || req.query.page) {
+    if (req.query.limit) {
       if (!validator.isInt(req.query.limit)) {
         errorMessages.push("Please enter proper number for limit query");
       }
+    }
 
+    if (req.query.page) {
       if (!validator.isInt(req.query.page)) {
         errorMessages.push("Please enter proper number for page query");
       }
