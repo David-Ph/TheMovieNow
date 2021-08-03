@@ -11,6 +11,7 @@ const app = express();
 // ////////////////
 const movieRouter = require("./routes/movies");
 const userRouter = require("./routes/user");
+const reviews = require("./routes/reviews");
 
 // ? import error handler
 // //////////////////////
@@ -27,6 +28,7 @@ app.use(fileUpload());
 // /////////////
 app.use("/movies", movieRouter);
 app.use("/user", userRouter);
+app.use("/reviews", reviews);
 
 app.all("*", async (req, res, next) => {
   try {
