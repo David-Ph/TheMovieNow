@@ -44,6 +44,11 @@ const movieSchema = new mongoose.Schema(
       type: String,
       required: false,
     },
+    averageRating: {
+      type: Number,
+      min: [1, "Rating must be at least 1"],
+      max: [5, "Rating must can not be more than 5"],
+    },
   },
   {
     // Enables timestamps
