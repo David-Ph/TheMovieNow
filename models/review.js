@@ -41,7 +41,8 @@ const ReviewSchema = new mongoose.Schema(
 );
 
 // Prevent user for submitting more than one review per Movie
-ReviewSchema.index({ Movie: 1, User: 1 }, { unique: true });
+// change this
+ReviewSchema.index({ movie_id: 1, user_id: 1 }, { unique: true });
 
 // Static method to get average rating
 ReviewSchema.statics.getAverageRating = async function (movie_id) {
