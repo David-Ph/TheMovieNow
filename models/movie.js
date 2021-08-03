@@ -18,7 +18,7 @@ const movieSchema = new mongoose.Schema(
     ],
     actors: [
       {
-        type: String,
+        type: mongoose.Schema.Types.Mixed,
       },
     ],
     trailer: {
