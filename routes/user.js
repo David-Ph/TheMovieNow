@@ -26,7 +26,7 @@ const { getToken } = require("../controllers/auth");
 const router = express.Router();
 
 // router
-router.post("/signup", signUpValidator, signup);
+router.post("/signup", signUpValidator, signup, getToken);
 router.post("/signin", signInValidator, signin, getToken);
 router.get("/", admin, getAllUsers);
 router.get("/:id", adminOrUser, getOneUser);
