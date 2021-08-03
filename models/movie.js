@@ -6,7 +6,6 @@ const movieSchema = new mongoose.Schema(
     title: {
       type: String,
       required: true,
-      unique: true,
     },
     synopsis: {
       type: String,
@@ -43,6 +42,11 @@ const movieSchema = new mongoose.Schema(
     featuredSong: {
       type: String,
       required: false,
+    },
+    averageRating: {
+      type: Number,
+      min: [1, "Rating must be at least 1"],
+      max: [5, "Rating must can not be more than 5"],
     },
   },
   {
