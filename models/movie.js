@@ -61,7 +61,14 @@ const movieSchema = new mongoose.Schema(
       updatedAt: "updatedAt",
     },
     toObject: { getters: true },
-    toJSON: { getters: true },
+    toJSON: {
+      getters: true,
+      versionKey: false,
+      transform: function (doc, ret) {
+        delete ret.id;
+        delete ret.deleted;
+      },
+    },
   }
 );
 
