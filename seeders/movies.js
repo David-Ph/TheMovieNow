@@ -1,6 +1,6 @@
 const faker = require("faker");
 const { Movie } = require("../models");
-const { posters, titles } = require("../config/moviesInfo");
+const { posters, titles, actors } = require("../config/moviesInfo");
 const categoriesArray = require("../config/categories");
 
 /* 
@@ -17,6 +17,15 @@ async function addMovies() {
         categoriesArray[Math.floor(Math.random() * categoriesArray.length)],
         categoriesArray[Math.floor(Math.random() * categoriesArray.length)],
         categoriesArray[Math.floor(Math.random() * categoriesArray.length)],
+      ])
+    );
+
+    const uniqueActors = Array.from(
+      new Set([
+        actors[Math.floor(Math.random() * actors.length)],
+        actors[Math.floor(Math.random() * actors.length)],
+        actors[Math.floor(Math.random() * actors.length)],
+        actors[Math.floor(Math.random() * actors.length)],
       ])
     );
 
