@@ -44,6 +44,13 @@ const userSchema = new mongoose.Schema(
   }
 );
 
+userSchema.virtual("reviews", {
+  ref: "Review",
+  localField: "_id",
+  foreignField: "movie_id",
+  justOne: false,
+});
+
 /* Getter photo */
 function getPhoto(photo) {
   if (!photo || photo.includes("https") || photo.includes("http")) {
