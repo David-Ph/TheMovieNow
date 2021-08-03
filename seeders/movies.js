@@ -1,6 +1,6 @@
 const faker = require("faker");
 const { Movie } = require("../models");
-const { posters, titles } = require("../config/moviesInfo");
+const { posters, titles, actors } = require("../config/moviesInfo");
 const categoriesArray = require("../config/categories");
 
 /* 
@@ -20,6 +20,15 @@ async function addMovies() {
       ])
     );
 
+    const uniqueActors = Array.from(
+      new Set([
+        actors[Math.floor(Math.random() * actors.length)],
+        actors[Math.floor(Math.random() * actors.length)],
+        actors[Math.floor(Math.random() * actors.length)],
+        actors[Math.floor(Math.random() * actors.length)],
+      ])
+    );
+
     const randomPosters = posters[Math.floor(Math.random() * posters.length)];
     const randomTitle = titles[Math.floor(Math.random() * titles.length)];
 
@@ -27,6 +36,7 @@ async function addMovies() {
       title: randomTitle + " " + i,
       synopsis: faker.lorem.words(50),
       categories: uniqueCategories,
+      actors: uniqueActors,
       trailer: "https://youtube.com",
       releaseDate: faker.date.past(),
       director: faker.name.findName(),
