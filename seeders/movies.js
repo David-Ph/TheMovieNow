@@ -36,6 +36,7 @@ async function addMovies() {
       title: randomTitle + " " + i,
       synopsis: faker.lorem.words(50),
       categories: uniqueCategories,
+      actors: uniqueActors,
       trailer: "https://youtube.com",
       releaseDate: faker.date.past(),
       director: faker.name.findName(),
