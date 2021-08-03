@@ -28,8 +28,14 @@ const ReviewSchema = new mongoose.Schema(
   {
     // Enable timestamps
     timestamps: {
-      createdAt: "createdAt",
-      UpdatedAt: "updateAt",
+      createdAt: {
+        type: Date,
+        default: Date.now,
+      },
+      UpdatedAt: {
+        type: Date,
+        default: Date.now,
+      },
     },
   }
 );
@@ -38,22 +44,22 @@ const ReviewSchema = new mongoose.Schema(
 ReviewSchema.index({ Movie: 1, User: 1 }, { unique: true });
 
 // Static method to get average rating
-ReviewSchema.statics.getAverageRating = async function (MovieId) {
+ReviewSchema.statics.getAverageRating = async function (movie_id) {
   const obj = await this.aggregate([
     {
-      $match: { Movie: MovieId },
+      $match: { movie_id: movie_id },
     },
     {
       $group: {
-        _id: "$Movie",
+        _id: "$movie_id",
         averageRating: { $avg: "$rating" },
       },
     },
   ]);
 
   try {
-    await this.model("Movie").findByIdAndUpdate(MovieId, {
-      averageRating: obj[0].averageRating,
+    await this.model("movie").findByIdAndUpdate(movie_id, {
+      averageRating: obj[0].averageRating.toFixed(2),
     });
   } catch (e) {
     console.error(e);
@@ -62,12 +68,12 @@ ReviewSchema.statics.getAverageRating = async function (MovieId) {
 
 // call getAverageCost after save
 ReviewSchema.post("save", function () {
-  this.constructor.getAverageRating(this.Movie);
+  this.constructor.getAverageRating(this.movie_id);
 });
 
 // call getAverageCost after remove
-ReviewSchema.pre("remove", function () {
-  this.constructor.getAverageRating(this.Movie);
+ReviewSchema.post("remove", function () {
+  this.constructor.getAverageRating(this.movie_id);
 });
 
 // Enable soft delete, it will make delete column automatic
