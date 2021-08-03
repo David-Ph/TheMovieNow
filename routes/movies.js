@@ -7,15 +7,26 @@ const MovieController = require("../controllers/movies");
 
 // ? import validators
 // ////////////////////
-const { movieValidator } = require("../middlewares/validators/movies");
+const {
+  movieValidator,
+  queryMovieValidator,
+} = require("../middlewares/validators/movies");
 
 // ? set routers
 // //////////////
-router.get("/", MovieController.getMoviesByPage);
-router.get("/all", MovieController.getAllMovies);
-router.get("/search", MovieController.getMoviesByTitle);
-router.get("/categories/all", MovieController.getAllCategories);
-router.get("/categories/:tag", MovieController.getMoviesByCategory);
+router.get("/", queryMovieValidator, MovieController.getMoviesByPage);
+router.get("/all", queryMovieValidator, MovieController.getAllMovies);
+router.get("/search", queryMovieValidator, MovieController.getMoviesByTitle);
+router.get(
+  "/categories/all",
+  queryMovieValidator,
+  MovieController.getAllCategories
+);
+router.get(
+  "/categories/:tag",
+  queryMovieValidator,
+  MovieController.getMoviesByCategory
+);
 router.get("/:id", MovieController.getMovieById);
 
 router.post("/", movieValidator, MovieController.createMovie);

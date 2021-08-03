@@ -7,6 +7,32 @@ function hasDuplicates(array) {
   return new Set(array).size !== array.length;
 }
 
+exports.queryMovieValidator = async (req, res, next) => {
+  try {
+    const errorMessages = [];
+
+    if (req.query.limit) {
+      if (!validator.isInt(req.query.limit)) {
+        errorMessages.push("Please enter proper number for limit query");
+      }
+    }
+
+    if (req.query.page) {
+      if (!validator.isInt(req.query.page)) {
+        errorMessages.push("Please enter proper number for page query");
+      }
+    }
+
+    if (errorMessages.length > 0) {
+      return next({ statusCode: 400, messages: errorMessages });
+    }
+
+    next();
+  } catch (error) {
+    next(error);
+  }
+};
+
 exports.movieValidator = async (req, res, next) => {
   try {
     const errorMessages = [];
