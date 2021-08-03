@@ -4,12 +4,20 @@ exports.signUpValidator = async (req, res, next) => {
   try {
     const errorMessages = [];
 
+    if (validator.isEmpty(req.body.fullname)) {
+      errorMessages.push("Fullname can not be empty");
+    }
+
+    if (req.body.fullname.length < 3) {
+      errorMessages.push("Fullname characters minimal is 3");
+    }
+
     if (!validator.isEmail(req.body.email)) {
       errorMessages.push("email is not valid");
     }
 
     if (!validator.isStrongPassword(req.body.password)) {
-      errorMessages.push("password is not strong enaugh");
+      errorMessages.push("password is not strong enough");
     }
 
     if (errorMessages.length > 0) {

@@ -12,12 +12,7 @@ const {
   signInValidator,
 } = require("../middlewares/validators/auth");
 
-const {
-  getAllUsers,
-  getOneUser,
-  updateUser,
-  deleteUser,
-} = require("../controllers/user");
+const { getOneUser, updateUser } = require("../controllers/user");
 
 // import controller
 const { getToken } = require("../controllers/auth");
@@ -26,12 +21,10 @@ const { getToken } = require("../controllers/auth");
 const router = express.Router();
 
 // router
-router.post("/signup", signUpValidator, signup);
+router.post("/signup", signUpValidator, signup, getToken);
 router.post("/signin", signInValidator, signin, getToken);
-router.get("/", admin, getAllUsers);
 router.get("/:id", adminOrUser, getOneUser);
 router.put("/:id", adminOrUser, updateUser);
-router.delete("/:id", adminOrUser, deleteUser);
 
 // exports
 module.exports = router;

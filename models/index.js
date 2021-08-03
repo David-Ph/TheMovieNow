@@ -14,4 +14,3 @@ const uri = mongoose
   .catch((err) => console.log(err));
 
 exports.user = require("./user");
-exports.Movie = require("./movie");
