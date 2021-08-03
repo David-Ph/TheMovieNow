@@ -28,14 +28,8 @@ const ReviewSchema = new mongoose.Schema(
   {
     // Enable timestamps
     timestamps: {
-      createdAt: {
-        type: Date,
-        default: Date.now,
-      },
-      UpdatedAt: {
-        type: Date,
-        default: Date.now,
-      },
+      createdAt: "createdAt",
+      UpdatedAt: "updatedAt",
     },
   }
 );
