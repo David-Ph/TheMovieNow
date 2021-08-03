@@ -1,6 +1,6 @@
 const validator = require("validator");
 const mongoose = require("mongoose");
-const { Movie } = require("../../models");
+const { Movie, user, Review } = require("../../models");
 
 exports.getDetailValidator = async (req, res, next) => {
   try {
@@ -31,7 +31,7 @@ exports.createOrUpdateReviewValidator = async (req, res, next) => {
       errorMessages.push("Rating Must Be Number");
     }
 
-    if (!validator.isLength(req.body.textContent)) {
+    if (!validator.isLength(req.body.text)) {
       errorMessages.push("Text Content Not Must Be Empty");
     }
 
@@ -42,7 +42,7 @@ exports.createOrUpdateReviewValidator = async (req, res, next) => {
     /* Find user and movie is exist or not */
     const data = await Promise.all([
       user.findOne({ _id: req.body.user_id }),
-      movie.findOne({ _id: req.body.movie_id }),
+      Movie.findOne({ _id: req.body.movie_id }),
     ]);
 
     if (!data[0] || !data[1]) {
