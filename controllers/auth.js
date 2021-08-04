@@ -17,6 +17,18 @@ class Auth {
       next(error);
     }
   }
+
+  async getMe(req, res, next) {
+    try {
+      const data = await user
+        .findOne({ _id: req.user.user })
+        .select("-password");
+
+      res.status(200).json({ data });
+    } catch (error) {
+      next(error);
+    }
+  }
 }
 
 module.exports = new Auth();
