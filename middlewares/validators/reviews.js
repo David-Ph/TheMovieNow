@@ -50,12 +50,12 @@ exports.updateReviewValidator = async (req, res, next) => {
     /* Validate the user input */
     const errorMessages = [];
 
-    if (!mongoose.Types.ObjectId.isValid(req.body.user_id)) {
-      errorMessages.push("User ID Is Not Valid");
+    if (req.body.user_id) {
+      errorMessages.push("You can not edit user_id");
     }
 
-    if (!mongoose.Types.ObjectId.isValid(req.body.movie_id)) {
-      errorMessages.push("Movie ID Is Not Valid");
+    if (req.body.movie_id) {
+      errorMessages.push("You can not edit movie_id");
     }
 
     if (!validator.isInt(req.body.rating)) {
