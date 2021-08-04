@@ -33,15 +33,21 @@ const userSchema = new mongoose.Schema(
       default: "user",
     },
   },
-
-  // enable timestamp
   {
-    timestamp: {
+    // Enables timestamps
+    timestamps: {
       createdAt: "createdAt",
       updatedAt: "updatedAt",
     },
     toObject: { getters: true },
-    toJSON: { getters: true },
+    toJSON: {
+      getters: true,
+      versionKey: false,
+      transform: function (doc, ret) {
+        delete ret.id;
+        delete ret.deleted;
+      },
+    },
   }
 );
 
