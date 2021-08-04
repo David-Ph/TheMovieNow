@@ -23,15 +23,11 @@ class Reviews {
 
   async getDetailReview(req, res, next) {
     try {
-      let data = await Review.findById({ _id: req.params.id }).populate(
-        "Movie"
-      );
+      let data = await Review.findById({ _id: req.params.id });
 
       if (!data) {
         return next({ message: "Review Not Found", statusCode: 404 });
       }
-
-      data.Movie = await Movie.findOne({ _id: data.Movie });
 
       res.status(200).json({ data });
     } catch (error) {
@@ -59,22 +55,18 @@ class Reviews {
     try {
       // Update data
       let data = await Review.findOneAndUpdate(
-        {
-          _id: req.params.id,
-        },
+        { _id: req.params.id },
         req.body, // This is all of req.body
-        {
-          new: true,
-        }
+        { new: true }
       );
       // new is to return the updated Review data
       // If no new, it will return the old data before updated
 
-      if (!data) {
+      if (newData) {
         return next({ message: "Review Not Found", statusCode: 404 });
       }
 
-      data.Movie = await Movie.findOne({ _id: data.Movie });
+      // data.Movie = await Movie.findOne({ _id: data.Movie });
 
       // If success
       return res.status(201).json({ data });
@@ -85,9 +77,9 @@ class Reviews {
 
   async deleteReview(req, res, next) {
     try {
-      const data = await Review.delete({ _id: req.params.id });
+      const data = await Review.delete(req.params.id);
 
-      if (data.n === 0) {
+      if (!data) {
         return next({ message: "Review Not Found", statusCode: 404 });
       }
 
