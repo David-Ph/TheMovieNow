@@ -71,13 +71,9 @@ exports.updateReviewValidator = async (req, res, next) => {
     }
 
     /* Find id and movie is right or not */
-    const newData = await data.findOne({
-      _id: req.params.id,
-      user_id: req.user.user,
-    });
-
-    if (!newData) {
-      errorMessages.push("Data Not Found");
+    const currentUser = req.user.user;
+    if (currentUser != req.body.user_id) {
+      return next({ statusCode: 403, messages: "Forbidden" });
     }
 
     if (errorMessages.length > 0) {

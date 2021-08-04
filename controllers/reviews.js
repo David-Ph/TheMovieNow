@@ -59,14 +59,9 @@ class Reviews {
         req.body, // This is all of req.body
         { new: true }
       );
-      // new is to return the updated Review data
-      // If no new, it will return the old data before updated
-
-      if (newData) {
+      if (!data) {
         return next({ message: "Review Not Found", statusCode: 404 });
       }
-
-      // data.Movie = await Movie.findOne({ _id: data.Movie });
 
       // If success
       return res.status(201).json({ data });

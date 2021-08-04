@@ -16,6 +16,9 @@ const {
   deleteReview,
 } = require("../controllers/reviews");
 
+// import auth
+const { admin, user, adminOrUser } = require("../middlewares/auth/user");
+
 // Make router
 const router = express.Router();
 
@@ -24,7 +27,7 @@ router.post("/", createReviewValidator, createReview);
 router.get("/", getAllReviews);
 
 router.get("/:id", getDetailValidator, getDetailReview);
-router.put("/:id", updateReviewValidator, updateReview);
+router.put("/:id", user, updateReviewValidator, updateReview);
 router.delete("/:id", deleteReview);
 
 // Exports
