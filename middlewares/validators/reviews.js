@@ -70,9 +70,15 @@ exports.updateReviewValidator = async (req, res, next) => {
       return next({ messages: errorMessages, statusCode: 400 });
     }
 
+    const reviewToUpdate = await Review.findById({ _id: req.params.id });
+
+    if (!reviewToUpdate) {
+      return next({ message: "Review Not Found", statusCode: 404 });
+    }
+
     /* Find id and movie is right or not */
     const currentUser = req.user.user;
-    if (currentUser != req.body.user_id) {
+    if (currentUser != reviewToUpdate.user_id) {
       return next({ statusCode: 403, messages: "Forbidden" });
     }
 
