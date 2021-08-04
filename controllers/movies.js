@@ -48,7 +48,7 @@ class MovieController {
     try {
       let data = await Movie.findOne({
         _id: req.params.id,
-      }); //.populate("reviews");
+      }).populate("reviews");
 
       if (!data) {
         return next({ statusCode: 404, message: "Movie not found" });

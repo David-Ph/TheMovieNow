@@ -26,15 +26,18 @@ const ReviewSchema = new mongoose.Schema(
     },
   },
   {
-    // Enable timestamps
+    // Enables timestamps
     timestamps: {
-      createdAt: {
-        type: Date,
-        default: Date.now,
-      },
-      UpdatedAt: {
-        type: Date,
-        default: Date.now,
+      createdAt: "createdAt",
+      updatedAt: "updatedAt",
+    },
+    toObject: { getters: true },
+    toJSON: {
+      getters: true,
+      versionKey: false,
+      transform: function (doc, ret) {
+        delete ret.id;
+        delete ret.deleted;
       },
     },
   }
@@ -59,7 +62,7 @@ ReviewSchema.statics.getAverageRating = async function (movie_id) {
   ]);
 
   try {
-    await this.model("movie").findByIdAndUpdate(movie_id, {
+    await this.model("Movie").findByIdAndUpdate(movie_id, {
       averageRating: obj[0].averageRating.toFixed(2),
     });
   } catch (e) {
