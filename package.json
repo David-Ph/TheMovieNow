@@ -14,7 +14,7 @@
     "seed:prod:remove": "NODE_ENV=production node seeders remove",
     "test": "NODE_ENV=test jest --testTimeout=10000 --coverage --forceExit",
     "stop": "killall node",
-    "start": "NODE_ENV=production node index > /dev/null 2>&1 &"
+    "start": "NODE_ENV=production node app > /dev/null 2>&1 &"
   },
   "repository": {
     "type": "git",
