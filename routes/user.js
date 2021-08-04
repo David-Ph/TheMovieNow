@@ -5,6 +5,8 @@ const { signup, signin } = require("../middlewares/auth/user");
 
 // admin or user validator
 const { admin, user, adminOrUser } = require("../middlewares/auth/user");
+const { getMe } = require("../controllers/auth");
+const { userValidator } = require("../middlewares/validators/user");
 
 // import validator
 const {
@@ -12,12 +14,7 @@ const {
   signInValidator,
 } = require("../middlewares/validators/auth");
 
-const {
-  getAllUsers,
-  getOneUser,
-  updateUser,
-  deleteUser,
-} = require("../controllers/user");
+const { updateUser } = require("../controllers/user");
 
 // import controller
 const { getToken } = require("../controllers/auth");
@@ -26,12 +23,10 @@ const { getToken } = require("../controllers/auth");
 const router = express.Router();
 
 // router
-router.post("/signup", signUpValidator, signup);
+router.post("/signup", signUpValidator, signup, getToken);
 router.post("/signin", signInValidator, signin, getToken);
-router.get("/", admin, getAllUsers);
-router.get("/:id", adminOrUser, getOneUser);
-router.put("/:id", adminOrUser, updateUser);
-router.delete("/:id", adminOrUser, deleteUser);
+router.get("/getMe", adminOrUser, getMe);
+router.put("/:id", adminOrUser, userValidator, updateUser);
 
 // exports
 module.exports = router;

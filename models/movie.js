@@ -6,7 +6,6 @@ const movieSchema = new mongoose.Schema(
     title: {
       type: String,
       required: true,
-      unique: true,
     },
     synopsis: {
       type: String,
@@ -15,6 +14,11 @@ const movieSchema = new mongoose.Schema(
     categories: [
       {
         type: String,
+      },
+    ],
+    actors: [
+      {
+        type: mongoose.Schema.Types.Mixed,
       },
     ],
     trailer: {
@@ -44,9 +48,10 @@ const movieSchema = new mongoose.Schema(
       type: String,
       required: false,
     },
-    avgRating: {
+    averageRating: {
       type: Number,
-      required: false,
+      min: [1, "Rating must be at least 1"],
+      max: [5, "Rating must can not be more than 5"],
     },
   },
   {
@@ -54,6 +59,15 @@ const movieSchema = new mongoose.Schema(
     timestamps: {
       createdAt: "createdAt",
       updatedAt: "updatedAt",
+    },
+    toObject: { getters: true },
+    toJSON: {
+      getters: true,
+      versionKey: false,
+      transform: function (doc, ret) {
+        delete ret.id;
+        delete ret.deleted;
+      },
     },
   }
 );
@@ -70,7 +84,7 @@ function getImage(image) {
     return image;
   }
 
-  return `/images/posters/${image}`;
+  return `/posters/${image}`;
 }
 
 // Enable soft delete, it will make delete column automaticly

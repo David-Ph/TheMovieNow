@@ -37,13 +37,15 @@ class Reviews {
 
   async createReview(req, res, next) {
     try {
-      // Create Review
       const newData = await Review.create(req.body);
 
-      // // Find the Review has been created
-      const newData = await Review.findOne({ _id: newData._id });
+      const data = await Review.findOne({
+        _id: newData._id,
+      });
 
-      res.status(201).json({ data });
+      res
+        .status(201)
+        .json({ data, message: "New Review Successfully Created!" });
     } catch (error) {
       next(error);
     }

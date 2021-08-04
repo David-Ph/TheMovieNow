@@ -22,6 +22,7 @@ class Auth {
     try {
       const data = await user
         .findOne({ _id: req.user.user })
+        .populate("reviews")
         .select("-password");
 
       res.status(200).json({ data });

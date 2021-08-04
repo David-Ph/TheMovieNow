@@ -1,11 +1,12 @@
+const { addMovies, deleteMovies } = require("./movies");
 const { addUsers, deleteUsers } = require("./user");
 
 async function add() {
-  await addUsers();
+  await Promise.all([addMovies(), addUsers()]);
 }
 
 async function remove() {
-  await deleteUsers();
+  await Promise.all([deleteMovies(), deleteUsers()]);
 }
 
 if (process.argv[2] === "add") {

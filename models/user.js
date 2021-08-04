@@ -7,6 +7,7 @@ const userSchema = new mongoose.Schema(
     fullname: {
       type: String,
       required: true,
+      minlength: 3,
     },
     email: {
       type: String,
@@ -22,6 +23,8 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: false,
       get: getPhoto,
+      default:
+        "https://www.personality-insights.com/wp-content/uploads/2017/12/default-profile-pic-e1513291410505.jpg",
     },
     role: {
       type: String,
@@ -41,6 +44,13 @@ const userSchema = new mongoose.Schema(
     toJSON: { getters: true },
   }
 );
+
+userSchema.virtual("reviews", {
+  ref: "Review",
+  localField: "_id",
+  foreignField: "user_id",
+  justOne: false,
+});
 
 /* Getter photo */
 function getPhoto(photo) {

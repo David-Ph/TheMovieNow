@@ -6,7 +6,19 @@ exports.userValidator = async (req, res, next) => {
     const errorMessages = [];
 
     if (validator.isEmpty(req.body.fullname)) {
-      errorMessages.push("Name must not be empty");
+      errorMessages.push("Name can not be empty");
+    }
+
+    if (req.body.fullname.length < 3) {
+      errorMessages.push("Fullname characters minimal is 3");
+    }
+
+    if (!validator.isEmail(req.body.email)) {
+      errorMessages.push("email is not valid");
+    }
+
+    if (!validator.isStrongPassword(req.body.password)) {
+      errorMessages.push("password is not strong enough");
     }
 
     if (req.files) {

@@ -26,16 +26,26 @@ const ReviewSchema = new mongoose.Schema(
     },
   },
   {
-    // Enable timestamps
+    // Enables timestamps
     timestamps: {
       createdAt: "createdAt",
-      UpdatedAt: "updatedAt",
+      updatedAt: "updatedAt",
+    },
+    toObject: { getters: true },
+    toJSON: {
+      getters: true,
+      versionKey: false,
+      transform: function (doc, ret) {
+        delete ret.id;
+        delete ret.deleted;
+      },
     },
   }
 );
 
 // Prevent user for submitting more than one review per Movie
-ReviewSchema.index({ Movie: 1, User: 1 }, { unique: true });
+// change this
+ReviewSchema.index({ movie_id: 1, user_id: 1 }, { unique: true });
 
 // Static method to get average rating
 ReviewSchema.statics.getAverageRating = async function (movie_id) {
@@ -52,7 +62,7 @@ ReviewSchema.statics.getAverageRating = async function (movie_id) {
   ]);
 
   try {
-    await this.model("movie").findByIdAndUpdate(movie_id, {
+    await this.model("Movie").findByIdAndUpdate(movie_id, {
       averageRating: obj[0].averageRating.toFixed(2),
     });
   } catch (e) {

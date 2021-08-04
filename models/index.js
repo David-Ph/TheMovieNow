@@ -15,3 +15,4 @@ const uri = mongoose
 
 exports.user = require("./user");
 exports.Movie = require("./movie");
+exports.Review = require("./review");
