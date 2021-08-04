@@ -48,7 +48,7 @@ const userSchema = new mongoose.Schema(
 userSchema.virtual("reviews", {
   ref: "Review",
   localField: "_id",
-  foreignField: "movie_id",
+  foreignField: "user_id",
   justOne: false,
 });
 
