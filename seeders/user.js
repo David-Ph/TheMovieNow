@@ -3,7 +3,7 @@ const { user } = require("../models");
 
 // seeder add
 async function addUsers() {
-  for (let i = 0; i < 10; i++) {
+  for (let i = 0; i < 3; i++) {
     await user.create({
       fullname: faker.name.findName(),
       email: faker.internet.email(),
