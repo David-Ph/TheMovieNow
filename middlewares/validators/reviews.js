@@ -70,15 +70,42 @@ exports.updateReviewValidator = async (req, res, next) => {
       return next({ messages: errorMessages, statusCode: 400 });
     }
 
-    const reviewToUpdate = await Review.findById({ _id: req.params.id });
+    // const reviewToUpdate = await Review.findById({ _id: req.params.id });
 
-    if (!reviewToUpdate) {
+    // if (!reviewToUpdate) {
+    //   return next({ message: "Review Not Found", statusCode: 404 });
+    // }
+
+    // /* Find id and movie is right or not */
+    // const currentUser = req.user.user;
+    // if (currentUser != reviewToUpdate.user_id) {
+    //   return next({ statusCode: 403, messages: "Forbidden" });
+    // }
+
+    if (errorMessages.length > 0) {
+      return next({ messages: errorMessages, statusCode: 400 });
+    }
+
+    next();
+  } catch (error) {
+    next(error);
+  }
+};
+
+exports.checkUserValidator = async (req, res, next) => {
+  try {
+    /* Validate the user input */
+    const errorMessages = [];
+
+    const reviewToModify = await Review.findById({ _id: req.params.id });
+
+    if (!reviewToModify) {
       return next({ message: "Review Not Found", statusCode: 404 });
     }
 
     /* Find id and movie is right or not */
     const currentUser = req.user.user;
-    if (currentUser != reviewToUpdate.user_id) {
+    if (currentUser != reviewToModify.user_id) {
       return next({ statusCode: 403, messages: "Forbidden" });
     }
 
