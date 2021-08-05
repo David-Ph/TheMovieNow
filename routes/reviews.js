@@ -13,6 +13,7 @@ const {
   createReview,
   getAllReviews,
   getDetailReview,
+  getReviewsByMovie,
   updateReview,
   deleteReview,
 } = require("../controllers/reviews");
@@ -24,8 +25,9 @@ const { admin, user, adminOrUser } = require("../middlewares/auth/user");
 const router = express.Router();
 
 // Make some routes
-router.post("/", user, createReviewValidator, createReview); // need user token/auth
-router.get("/", getAllReviews); // need getReviewByMovie
+router.post("/", user, createReviewValidator, createReview);
+router.get("/movie/:movieid", getReviewsByMovie);
+router.get("/", getAllReviews);
 
 router.get("/:id", getDetailValidator, getDetailReview);
 router.put(
