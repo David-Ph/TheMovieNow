@@ -28,7 +28,7 @@ router.get(
   MovieController.getMoviesByCategory
 );
 router.get("/:id", MovieController.getMovieById);
-
+// anything below needs admin token/auth
 router.post("/", movieValidator, MovieController.createMovie);
 router.put("/:id", movieValidator, MovieController.updateMovie);
 router.delete("/:id", MovieController.deleteMovie);

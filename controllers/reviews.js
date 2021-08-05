@@ -35,6 +35,20 @@ class Reviews {
     }
   }
 
+  async getReviewsByMovie(req, res, next) {
+    try {
+      const data = await Review.find({ movie_id: req.params.movieid });
+
+      if (data.length === 0) {
+        return next({ message: "Review Not Found", statusCode: 404 });
+      }
+
+      res.status(200).json({ data });
+    } catch (error) {
+      next(error);
+    }
+  }
+
   async createReview(req, res, next) {
     try {
       const newData = await Review.create(req.body);
@@ -72,7 +86,7 @@ class Reviews {
 
   async deleteReview(req, res, next) {
     try {
-      const data = await Review.delete(req.params.id);
+      const data = await Review.delete({ _id: req.params.id });
 
       if (!data) {
         return next({ message: "Review Not Found", statusCode: 404 });

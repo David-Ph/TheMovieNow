@@ -19,8 +19,8 @@ exports.createReviewValidator = async (req, res, next) => {
     /* Validate the user input */
     const errorMessages = [];
 
-    if (!mongoose.Types.ObjectId.isValid(req.body.user_id)) {
-      errorMessages.push("User ID Is Not Valid");
+    if (req.body.user_id) {
+      errorMessages.push("You don't need to input user_id");
     }
 
     if (!mongoose.Types.ObjectId.isValid(req.body.movie_id)) {
@@ -34,6 +34,9 @@ exports.createReviewValidator = async (req, res, next) => {
     if (!validator.isLength(req.body.text)) {
       errorMessages.push("Text Content Not Must Be Empty");
     }
+
+    const currentUser = req.user.user;
+    req.body.user_id = currentUser;
 
     if (errorMessages.length > 0) {
       return next({ messages: errorMessages, statusCode: 400 });
@@ -70,15 +73,30 @@ exports.updateReviewValidator = async (req, res, next) => {
       return next({ messages: errorMessages, statusCode: 400 });
     }
 
-    const reviewToUpdate = await Review.findById({ _id: req.params.id });
+    if (errorMessages.length > 0) {
+      return next({ messages: errorMessages, statusCode: 400 });
+    }
 
-    if (!reviewToUpdate) {
+    next();
+  } catch (error) {
+    next(error);
+  }
+};
+
+exports.checkUserValidator = async (req, res, next) => {
+  try {
+    /* Validate the user input */
+    const errorMessages = [];
+
+    const reviewToModify = await Review.findById({ _id: req.params.id });
+
+    if (!reviewToModify) {
       return next({ message: "Review Not Found", statusCode: 404 });
     }
 
     /* Find id and movie is right or not */
     const currentUser = req.user.user;
-    if (currentUser != reviewToUpdate.user_id) {
+    if (currentUser != reviewToModify.user_id) {
       return next({ statusCode: 403, messages: "Forbidden" });
     }
 
