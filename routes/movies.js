@@ -1,6 +1,10 @@
 const express = require("express");
 const router = express.Router();
 
+// ? Import user auth
+/////////////////////
+const { admin, user, adminOrUser } = require("../middlewares/auth/user");
+
 // ? import controllers
 // //////////////////////
 const MovieController = require("../controllers/movies");
@@ -29,9 +33,9 @@ router.get(
 );
 router.get("/:id", MovieController.getMovieById);
 // anything below needs admin token/auth
-router.post("/", movieValidator, MovieController.createMovie);
-router.put("/:id", movieValidator, MovieController.updateMovie);
-router.delete("/:id", MovieController.deleteMovie);
+router.post("/", admin, movieValidator, MovieController.createMovie);
+router.put("/:id", admin, movieValidator, MovieController.updateMovie);
+router.delete("/:id", admin, MovieController.deleteMovie);
 
 // ? export router
 //////////////////
