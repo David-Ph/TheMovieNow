@@ -19,8 +19,8 @@ exports.createReviewValidator = async (req, res, next) => {
     /* Validate the user input */
     const errorMessages = [];
 
-    if (!mongoose.Types.ObjectId.isValid(req.body.user_id)) {
-      errorMessages.push("User ID Is Not Valid");
+    if (req.body.user_id) {
+      errorMessages.push("You don't need to input user_id");
     }
 
     if (!mongoose.Types.ObjectId.isValid(req.body.movie_id)) {
@@ -34,6 +34,9 @@ exports.createReviewValidator = async (req, res, next) => {
     if (!validator.isLength(req.body.text)) {
       errorMessages.push("Text Content Not Must Be Empty");
     }
+
+    const currentUser = req.user.user;
+    req.body.user_id = currentUser;
 
     if (errorMessages.length > 0) {
       return next({ messages: errorMessages, statusCode: 400 });

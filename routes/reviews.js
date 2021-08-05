@@ -24,7 +24,7 @@ const { admin, user, adminOrUser } = require("../middlewares/auth/user");
 const router = express.Router();
 
 // Make some routes
-router.post("/", createReviewValidator, createReview); // need user token/auth
+router.post("/", user, createReviewValidator, createReview); // need user token/auth
 router.get("/", getAllReviews); // need getReviewByMovie
 
 router.get("/:id", getDetailValidator, getDetailReview);
@@ -35,7 +35,7 @@ router.put(
   updateReviewValidator,
   updateReview
 );
-router.delete("/:id", user, checkUserValidator, deleteReview); // need user token/auth
+router.delete("/:id", user, checkUserValidator, deleteReview);
 
 // Exports
 module.exports = router;
