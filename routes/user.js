@@ -26,7 +26,7 @@ const router = express.Router();
 router.post("/signup", signUpValidator, signup, getToken);
 router.post("/signin", signInValidator, signin, getToken);
 router.get("/getMe", adminOrUser, getMe);
-router.put("/:id", adminOrUser, userValidator, updateUser);
+router.put("/edit", adminOrUser, userValidator, updateUser);
 
 // exports
 module.exports = router;
