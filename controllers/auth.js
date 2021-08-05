@@ -2,7 +2,7 @@ const jwt = require("jsonwebtoken"); // import jwt
 const { user } = require("../models");
 
 class Auth {
-  getToken(req, res, next) {
+  async getToken(req, res, next) {
     try {
       const data = {
         user: req.user._id,
@@ -12,7 +12,11 @@ class Auth {
         expiresIn: "60d",
       });
 
-      res.status(200).json({ token });
+      const currentUser = await user
+        .findOne({ _id: req.user._id })
+        .select("-password");
+
+      res.status(200).json({ token, currentUser });
     } catch (error) {
       next(error);
     }

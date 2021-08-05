@@ -311,7 +311,6 @@ describe("/movies GET", () => {
 
     const response = await request(app).get(`/movies/${randomMovieId}`);
     //   .set("Authorization", `Bearer ${userToken}`);
-    console.log(response);
 
     expect(response.statusCode).toEqual(200);
     expect(response.body).toBeInstanceOf(Object);

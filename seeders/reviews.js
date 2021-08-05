@@ -1,28 +1,31 @@
 const faker = require("faker");
-const { review } = require("../models");
+const { Review, Movie, user } = require("../models");
 
-/* Add seeders */
-exports.addReviews = async () => {
-  const reviews = await reviews.find();
+async function addReviews() {
+  const users = await user.find();
+  const movies = await Movie.find();
 
-  for (let i = 0; i < 5; i++) {
-    await review.create({
-      name_id: faker.commerce.findName(),
-      movie_id: faker.commerce.findMovie(),
-      rating: faker.number.findRating(),
-      textContent: faker.lorem.text(),
-    });
+  for (let userIndex = 0; userIndex < users.length; userIndex++) {
+    for (let movieIndex = 0; movieIndex < movies.length; movieIndex++) {
+      const newReview = await Review.create({
+        user_id: users[userIndex]._id,
+        movie_id: movies[movieIndex]._id,
+        rating: Math.floor(Math.random() * 5 + 1),
+        text: faker.lorem.words(50),
+      });
+    }
   }
-  console.log("Review Has Been Seeded");
-};
+
+  console.log("Reviews has been added");
+}
 
 /* Delete seeders */
-exports.removeReviews = async () => {
-  await review.remove();
-  console.log("Review Has Been Removed");
-};
+async function deleteReviews() {
+  await Review.remove();
+  console.log("Reviews has been removed");
+}
 
 module.exports = {
   addReviews,
-  removeReviews,
+  deleteReviews,
 };

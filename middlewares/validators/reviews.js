@@ -14,7 +14,7 @@ exports.getDetailValidator = async (req, res, next) => {
   }
 };
 
-exports.createOrUpdateReviewValidator = async (req, res, next) => {
+exports.createReviewValidator = async (req, res, next) => {
   try {
     /* Validate the user input */
     const errorMessages = [];
@@ -39,14 +39,47 @@ exports.createOrUpdateReviewValidator = async (req, res, next) => {
       return next({ messages: errorMessages, statusCode: 400 });
     }
 
-    /* Find user and movie is exist or not */
-    const data = await Promise.all([
-      user.findOne({ _id: req.body.user_id }),
-      Movie.findOne({ _id: req.body.movie_id }),
-    ]);
+    next();
+  } catch (error) {
+    next(error);
+  }
+};
 
-    if (!data[0] || !data[1]) {
-      errorMessages.push("User Or Movie Not Found");
+exports.updateReviewValidator = async (req, res, next) => {
+  try {
+    /* Validate the user input */
+    const errorMessages = [];
+
+    if (req.body.user_id) {
+      errorMessages.push("You can not edit user_id");
+    }
+
+    if (req.body.movie_id) {
+      errorMessages.push("You can not edit movie_id");
+    }
+
+    if (!validator.isInt(req.body.rating)) {
+      errorMessages.push("Rating Must Be Number");
+    }
+
+    if (!validator.isLength(req.body.text)) {
+      errorMessages.push("Text Content Not Must Be Empty");
+    }
+
+    if (errorMessages.length > 0) {
+      return next({ messages: errorMessages, statusCode: 400 });
+    }
+
+    const reviewToUpdate = await Review.findById({ _id: req.params.id });
+
+    if (!reviewToUpdate) {
+      return next({ message: "Review Not Found", statusCode: 404 });
+    }
+
+    /* Find id and movie is right or not */
+    const currentUser = req.user.user;
+    if (currentUser != reviewToUpdate.user_id) {
+      return next({ statusCode: 403, messages: "Forbidden" });
     }
 
     if (errorMessages.length > 0) {
