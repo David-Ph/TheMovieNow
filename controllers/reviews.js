@@ -37,7 +37,10 @@ class Reviews {
 
   async getReviewsByMovie(req, res, next) {
     try {
-      const data = await Review.find({ movie_id: req.params.movieid });
+      const data = await Review.find({ movie_id: req.params.movieid }).populate(
+        "user_id",
+        "_id fullname photo"
+      );
 
       if (data.length === 0) {
         return next({ message: "Review Not Found", statusCode: 404 });
