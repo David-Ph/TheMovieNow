@@ -1,6 +1,6 @@
 const validator = require("validator");
 const mongoose = require("mongoose");
-const { Movie, user, Review } = require("../../models");
+const { Review } = require("../../models");
 
 exports.getDetailValidator = async (req, res, next) => {
   try {
@@ -67,10 +67,6 @@ exports.updateReviewValidator = async (req, res, next) => {
 
     if (!validator.isLength(req.body.text)) {
       errorMessages.push("Text Content Not Must Be Empty");
-    }
-
-    if (errorMessages.length > 0) {
-      return next({ messages: errorMessages, statusCode: 400 });
     }
 
     if (errorMessages.length > 0) {
