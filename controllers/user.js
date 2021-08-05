@@ -4,7 +4,7 @@ class User {
   async updateUser(req, res, next) {
     try {
       const newData = await user.findOneAndUpdate(
-        { _id: req.params.id },
+        { _id: req.user.user },
         req.body,
         { new: true }
       );
