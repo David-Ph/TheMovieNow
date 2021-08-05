@@ -46,24 +46,23 @@ class MovieController {
 
   async getMovieById(req, res, next) {
     try {
+      const page = req.query.page;
+      const limit = parseInt(req.query.limit) || 5;
+      const skipCount = page > 0 ? (page - 1) * limit : 0;
+
       let data = await Movie.findOne({
         _id: req.params.id,
       }).populate({
         path: "reviews",
+        options: {
+          limit: limit,
+          skip: skipCount,
+        },
         populate: {
           path: "user_id",
           select: "_id fullname photo",
         },
       });
-
-      /* 
-.populate({
-    path : 'userId',
-    populate : {
-      path : 'reviewId'
-    }
-  })
-*/
 
       if (!data) {
         return next({ statusCode: 404, message: "Movie not found" });
