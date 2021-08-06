@@ -60,6 +60,7 @@ ReviewSchema.statics.getAverageRating = async function (movie_id) {
       },
     },
   ]);
+  console.log(obj);
 
   try {
     await this.model("Movie").findByIdAndUpdate(movie_id, {
@@ -73,6 +74,10 @@ ReviewSchema.statics.getAverageRating = async function (movie_id) {
 // call getAverageCost after save
 ReviewSchema.post("save", function () {
   this.constructor.getAverageRating(this.movie_id);
+});
+
+ReviewSchema.post("findOneAndUpdate", function (doc) {
+  doc.constructor.getAverageRating(doc.movie_id._id);
 });
 
 // call getAverageCost after remove
