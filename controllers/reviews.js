@@ -93,7 +93,7 @@ class Reviews {
 
   async deleteReview(req, res, next) {
     try {
-      const data = await Review.delete({ _id: req.params.id });
+      const data = await Review.findByIdAndDelete(req.params.id);
 
       if (!data) {
         return next({ message: "Review Not Found", statusCode: 404 });
