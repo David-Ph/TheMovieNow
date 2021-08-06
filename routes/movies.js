@@ -19,6 +19,7 @@ const {
 // ? set routers
 // //////////////
 router.get("/", queryMovieValidator, MovieController.getMoviesByPage);
+router.get("/count", MovieController.getMoviesCount);
 router.get("/all", queryMovieValidator, MovieController.getAllMovies);
 router.get("/search", queryMovieValidator, MovieController.getMoviesByTitle);
 router.get(

@@ -19,6 +19,16 @@ class MovieController {
     }
   }
 
+  async getMoviesCount(req, res, next) {
+    try {
+      const moviesCount = await Movie.count();
+
+      res.status(200).json({ data: moviesCount });
+    } catch (error) {
+      next(error);
+    }
+  }
+
   async getMoviesByPage(req, res, next) {
     try {
       // get the page, limit, and movies to skip based on page
