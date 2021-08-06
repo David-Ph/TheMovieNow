@@ -2,7 +2,6 @@ require("dotenv").config({
   path: `.env.${process.env.NODE_ENV}`,
 }); // Config environment
 const mongoose = require("mongoose");
-console.log(process.env.MONGO_URI);
 const uri = mongoose
   .connect(process.env.MONGO_URI, {
     useUnifiedTopology: true, // must be added
