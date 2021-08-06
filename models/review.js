@@ -75,13 +75,14 @@ ReviewSchema.post("save", function () {
   this.constructor.getAverageRating(this.movie_id);
 });
 
-// call getAverageCost after remove
-ReviewSchema.post("remove", function () {
-  this.constructor.getAverageRating(this.movie_id);
+ReviewSchema.post("findOneAndUpdate", function (doc) {
+  doc.constructor.getAverageRating(doc.movie_id._id);
 });
 
-// Enable soft delete, it will make delete column automatic
-ReviewSchema.plugin(mongooseDelete, { overrideMethods: "all" });
+// call getAverageCost after remove
+ReviewSchema.post("findOneAndDelete", function (doc) {
+  doc.constructor.getAverageRating(doc.movie_id);
+});
 
 // Export model
 module.exports = mongoose.model("Review", ReviewSchema);

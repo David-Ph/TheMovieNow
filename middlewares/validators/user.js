@@ -4,9 +4,6 @@ const { promisify } = require("util");
 exports.userValidator = async (req, res, next) => {
   try {
     const errorMessages = [];
-    // if (req.user.user !== req.params.id) {
-    //   return next({ statusCode: 403, message: "Forbidden!" });
-    // }
 
     if (validator.isEmpty(req.body.fullname)) {
       errorMessages.push("Name can not be empty");

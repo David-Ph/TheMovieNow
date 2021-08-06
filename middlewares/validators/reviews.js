@@ -35,6 +35,8 @@ exports.createReviewValidator = async (req, res, next) => {
       errorMessages.push("Text Content Not Must Be Empty");
     }
 
+    // insert currently logged in user's id
+    // as the new review's user_id automatically
     const currentUser = req.user.user;
     req.body.user_id = currentUser;
 
@@ -90,7 +92,8 @@ exports.checkUserValidator = async (req, res, next) => {
       return next({ message: "Review Not Found", statusCode: 404 });
     }
 
-    /* Find id and movie is right or not */
+    /* check if currently logged in user
+    has same id as updatedReview's user_id */
     const currentUser = req.user.user;
     if (currentUser != reviewToModify.user_id) {
       return next({ statusCode: 403, messages: "Forbidden" });
