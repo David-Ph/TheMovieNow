@@ -156,6 +156,22 @@ describe("/reviews GET", () => {
     expect(response.statusCode).toEqual(400);
     expect(response.body).toBeInstanceOf(Object);
   });
+
+  it("get reviews by movie id", async () => {
+    const response = await request(app).get(`/reviews/movie/${movies[0]._id}`);
+
+    expect(response.statusCode).toEqual(200);
+    expect(response.body).toBeInstanceOf(Object);
+  });
+
+  it("get reviews by movie id not found", async () => {
+    const response = await request(app).get(
+      `/reviews/movie/610942b93c00c02068f97e18`
+    );
+
+    expect(response.statusCode).toEqual(404);
+    expect(response.body).toBeInstanceOf(Object);
+  });
 });
 
 describe("/reviews PUT", () => {
@@ -221,6 +237,23 @@ describe("/reviews PUT", () => {
     expect(response.statusCode).toEqual(400);
     expect(response.body).toBeInstanceOf(Object);
   });
+
+  it("update review not found", async () => {
+    const reviewToUpdate = await Review.find({
+      user_id: usersaya_id,
+    });
+    const response = await request(app)
+      .put(`/reviews/610942b93c00c02068f97e18`)
+      .set("Authorization", `Bearer ${userToken}`)
+      .send({
+        rating: Math.floor(Math.random() * 5 + 1).toString(),
+        text: faker.lorem.words(50),
+      });
+    console.log(response.text);
+
+    expect(response.statusCode).toEqual(404);
+    expect(response.body).toBeInstanceOf(Object);
+  });
 });
 
 describe("/reviews DELETE", () => {
@@ -245,7 +278,7 @@ describe("/reviews DELETE", () => {
     expect(response.body).toBeInstanceOf(Object);
   });
 
-  it("review not found", async () => {
+  it("delete review not found", async () => {
     const response = await request(app)
       .delete("/reviews/610aa6c0e334ec5806445084")
       .set("Authorization", `Bearer ${userToken}`);
