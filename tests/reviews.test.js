@@ -249,7 +249,6 @@ describe("/reviews PUT", () => {
         rating: Math.floor(Math.random() * 5 + 1).toString(),
         text: faker.lorem.words(50),
       });
-    console.log(response.text);
 
     expect(response.statusCode).toEqual(404);
     expect(response.body).toBeInstanceOf(Object);
