@@ -91,7 +91,7 @@ exports.actors = [
   {
     name: "Tom Holland",
     photoURL:
-      "https://cdns.klimg.com/merdeka.com/i/w/news/2020/04/03/1163135/540x270/corona-merebak-tom-holland-malah-ingin-pergi-ke-bali.jpg",
+      "https://www.themoviedb.org/t/p/original/k4Oimp5juy6qHPtFWUFpgEX4Sln.jpg",
   },
   {
     name: "Jung Eun Ji",

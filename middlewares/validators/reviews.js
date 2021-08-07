@@ -31,7 +31,7 @@ exports.createReviewValidator = async (req, res, next) => {
       errorMessages.push("Rating Must Be Number");
     }
 
-    if (!validator.isLength(req.body.text)) {
+    if (validator.isEmpty(req.body.text)) {
       errorMessages.push("Text Content Not Must Be Empty");
     }
 
@@ -67,7 +67,7 @@ exports.updateReviewValidator = async (req, res, next) => {
       errorMessages.push("Rating Must Be Number");
     }
 
-    if (!validator.isLength(req.body.text)) {
+    if (validator.isEmpty(req.body.text)) {
       errorMessages.push("Text Content Not Must Be Empty");
     }
 

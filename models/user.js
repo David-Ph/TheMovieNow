@@ -64,7 +64,7 @@ function getPhoto(photo) {
     return photo;
   }
 
-  return `/images/users/${photo}`;
+  return `${process.env.HOST}/images/users/${photo}`;
 }
 
 function setPassword(password) {

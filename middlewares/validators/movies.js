@@ -72,26 +72,6 @@ exports.movieValidator = async (req, res, next) => {
       });
     }
 
-    if (req.files) {
-      const file = req.files.posterImage;
-
-      if (!file.mimetype.startsWith("image")) {
-        errorMessages.push("File must be an image");
-      }
-
-      if (file.size > 1000000) {
-        errorMessages.push("Image must be less than 1MB");
-      }
-
-      file.name = (new Date().getTime() + "_" + file.name).replace(/\s/g, "");
-
-      const move = promisify(file.mv);
-
-      await move(`./public/posters/${file.name}`);
-
-      req.body.posterImage = file.name;
-    }
-
     if (errorMessages.length > 0) {
       return next({ statusCode: 400, messages: errorMessages });
     }
