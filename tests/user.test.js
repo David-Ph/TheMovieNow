@@ -226,5 +226,3 @@ describe("Update User", () => {
     expect(res.body).toBeInstanceOf(Object);
   });
 });
-
-//BELUM SELESAI

@@ -28,19 +28,14 @@ exports.userValidator = async (req, res, next) => {
       ) {
         errorMessages.push("File must be an image and less than 2MB");
       }
-
       const move = promisify(req.files.photo.mv);
-
-      await move(
-        `./images/users/${new Date().getTime() + "_" + req.files.photo.name}`
-      );
-
-      req.body.photo = new Date().getTime() + "_" + req.files.photo.name;
+      const newFileName = new Date().getTime() + "_" + req.files.photo.name;
+      await move(`./public/images/users/${newFileName}`);
+      req.body.photo = newFileName;
     }
     if (errorMessages.length > 0) {
       return next({ statusCode: 400, messages: errorMessages });
     }
-
     next();
   } catch (error) {
     next(error);
