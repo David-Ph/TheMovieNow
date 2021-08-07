@@ -11,6 +11,7 @@ let usersaya_id = "";
 let moviesaya_id = "";
 
 beforeAll(async () => {
+  jest.setTimeout(60000); // 1 second
   const usersaya = await user.create({
     fullname: faker.name.findName(),
     email: faker.internet.email(),

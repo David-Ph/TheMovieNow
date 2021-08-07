@@ -8,6 +8,8 @@ let userToken = "";
 let adminToken = "";
 
 beforeAll(async () => {
+  jest.setTimeout(60000); // 1 second
+
   data = await user.find();
 
   const user1 = await user.create({
