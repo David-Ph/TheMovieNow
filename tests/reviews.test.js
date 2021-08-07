@@ -9,24 +9,23 @@ let userToken = "";
 let usersaya_id = "";
 let moviesaya_id = "";
 const faker = require("faker");
+
 beforeAll(async () => {
   const usersaya = await user.create({
     fullname: faker.name.findName(),
     email: faker.internet.email(),
     password: "Aneh123!!",
   });
-  console.log(usersaya);
   const movie = await Movie.create({
     title: "movie test",
     synopsis: "synopsis test",
     trailer: "string trailer",
   });
-  console.log(movie);
+
   usersaya_id = usersaya._id;
   moviesaya_id = movie._id;
   userToken = jwt.sign({ user: usersaya._id }, process.env.JWT_SECRET);
 });
-console.log(userToken);
 
 describe("/reviews POST", () => {
   it("review must be created", async () => {
@@ -34,9 +33,8 @@ describe("/reviews POST", () => {
       .post("/reviews")
       .set("Authorization", `Bearer ${userToken}`)
       .send({
-        // user_id: usersaya_id,
         movie_id: moviesaya_id,
-        rating: Math.floor(Math.random() * 5 + 1),
+        rating: Math.floor(Math.random() * 5 + 1).toString(),
         text: faker.lorem.words(50),
       });
 
@@ -44,20 +42,31 @@ describe("/reviews POST", () => {
     expect(response.body).toBeInstanceOf(Object);
   });
 
-  //   it("rating or text field is empty", async () => {
-  //     const response = await request(app)
-  //       .post("/reviews")
-  //       //   .set("Authorization", `Bearer ${userToken}`)
-  //       .send({
-  //         user_id: usersaya_id,
-  //         movie_id: moviesaya_id,
-  //         rating: "",
-  //         text: "",
-  //       });
+  it("rating or text field is empty", async () => {
+    const response = await request(app)
+      .post("/reviews")
+      .set("Authorization", `Bearer ${userToken}`)
+      .send({
+        movie_id: moviesaya_id,
+        rating: "",
+        text: "",
+      });
 
-  //     expect(response.statusCode).toEqual(500);
-  //     expect(response.body).toBeInstanceOf(Object);
-  //   });
+    expect(response.statusCode).toEqual(400);
+    expect(response.body).toBeInstanceOf(Object);
+  });
+
+  it("rating or text field is not send", async () => {
+    const response = await request(app)
+      .post("/reviews")
+      .set("Authorization", `Bearer ${userToken}`)
+      .send({
+        movie_id: moviesaya_id,
+      });
+
+    expect(response.statusCode).toEqual(500);
+    expect(response.body).toBeInstanceOf(Object);
+  });
 
   //   it("user_id or movie_id not valid", async () => {
   //     const response = await request(app)
@@ -105,162 +114,162 @@ describe("/reviews POST", () => {
   //   });
 });
 
-describe("/reviews GET", () => {
-  it("find all reviews", async () => {
-    const response = await request(app)
-      .get("/reviews")
-      .set("Authorization", `Bearer ${userToken}`);
+// describe("/reviews GET", () => {
+//   it("find all reviews", async () => {
+//     const response = await request(app)
+//       .get("/reviews")
+//       .set("Authorization", `Bearer ${userToken}`);
 
-    expect(response.statusCode).toEqual(200);
-    expect(response.body).toBeInstanceOf(Object);
-  });
+//     expect(response.statusCode).toEqual(200);
+//     expect(response.body).toBeInstanceOf(Object);
+//   });
 
-  //   it("all reviews not found", async () => {
-  //     const response = await request(app).get("/reviews/");
-  //     //   .set("Authorization", `Bearer ${userToken}`);
+//   it("all reviews not found", async () => {
+//     const response = await request(app).get("/reviews/");
+//     //   .set("Authorization", `Bearer ${userToken}`);
 
-  //     expect(response.statusCode).toEqual(404);
-  //     expect(response.body).toBeInstanceOf(Object);
-  //   });
+//     expect(response.statusCode).toEqual(404);
+//     expect(response.body).toBeInstanceOf(Object);
+//   });
 
-  it("find one review", async () => {
-    const response = await request(app).get("/reviews");
-    //   .set("Authorization", `Bearer ${userToken}`);
+//   it("find one review", async () => {
+//     const response = await request(app).get("/reviews");
+//     //   .set("Authorization", `Bearer ${userToken}`);
 
-    expect(response.statusCode).toEqual(200);
-    expect(response.body).toBeInstanceOf(Object);
-  });
+//     expect(response.statusCode).toEqual(200);
+//     expect(response.body).toBeInstanceOf(Object);
+//   });
 
-  it("one review not found", async () => {
-    const response = await request(app).get("/reviews");
-    //   .set("Authorization", `Bearer ${userToken}`);
+//   it("one review not found", async () => {
+//     const response = await request(app).get("/reviews");
+//     //   .set("Authorization", `Bearer ${userToken}`);
 
-    expect(response.statusCode).toEqual(200);
-    expect(response.body).toBeInstanceOf(Object);
-  });
-});
+//     expect(response.statusCode).toEqual(200);
+//     expect(response.body).toBeInstanceOf(Object);
+//   });
+// });
 
-describe("/reviews DELETE", () => {
-  it("delete reviews", async () => {
-    const response = await request(app).get("/reviews");
-    //   .set("Authorization", `Bearer ${userToken}`);
+// describe("/reviews DELETE", () => {
+//   it("delete reviews", async () => {
+//     const response = await request(app).get("/reviews");
+//     //   .set("Authorization", `Bearer ${userToken}`);
 
-    expect(response.statusCode).toEqual(200);
-    expect(response.body).toBeInstanceOf(Object);
-  });
+//     expect(response.statusCode).toEqual(200);
+//     expect(response.body).toBeInstanceOf(Object);
+//   });
 
-  //   it("after delete, review not found", async () => {
-  //     const response = await request(app).get("/reviews");
-  //     //   .set("Authorization", `Bearer ${userToken}`);
+//   it("after delete, review not found", async () => {
+//     const response = await request(app).get("/reviews");
+//     //   .set("Authorization", `Bearer ${userToken}`);
 
-  //     expect(response.statusCode).toEqual(404);
-  //     expect(response.body).toBeInstanceOf(Object);
-  //   });
-});
+//     expect(response.statusCode).toEqual(404);
+//     expect(response.body).toBeInstanceOf(Object);
+//   });
+// });
 
-describe("/reviews PUT", () => {
-  //   it("update review", async () => {
-  //     const response = await request(app)
-  //       .post("/reviews")
-  //       .set("Authorization", `Bearer ${userToken}`)
-  //       .send({
-  //         user_id: usersaya_id,
-  //         movie_id: moviesaya_id,
-  //         rating: Math.floor(Math.random() * 5 + 1),
-  //         text: faker.lorem.words(50),
-  //       });
-  //     expect(response.statusCode).toEqual(201);
-  //     expect(response.body).toBeInstanceOf(Object);
-  //   });
-  //   it("edit another user's review", async () => {
-  //     const response = await request(app)
-  //       .post("/reviews")
-  //       .set("Authorization", `Bearer ${userToken}`)
-  //       .send({
-  //         user_id: ["edit another"],
-  //         movie_id: ["edit another"],
-  //         rating: Math.floor(Math.random() * 5 + 1),
-  //         text: faker.lorem.words(50),
-  //       });
-  //     expect(response.statusCode).toEqual(403);
-  //     expect(response.body).toBeInstanceOf(Object);
-  //   });
-  //   it("user_id or movie_id not valid", async () => {
-  //     const response = await request(app)
-  //       .post("/reviews")
-  //       //   .set("Authorization", `Bearer ${userToken}`)
-  //       .send({
-  //         user_id: ["not a real name"],
-  //         movie_id: ["not a real movie"],
-  //         rating: Math.floor(Math.random() * 5 + 1),
-  //         text: faker.lorem.words(50),
-  //       });
-  //     expect(response.statusCode).toEqual(400);
-  //     expect(response.body).toBeInstanceOf(Object);
-  //   });
-  // it("try to edit user_id or movie_id", async () => {
-  //   const response = await request(app)
-  //     .post("/reviews")
-  //     //   .set("Authorization", `Bearer ${userToken}`)
-  //     .send({
-  //       user_id: ["edit name"],
-  //       movie_id: ["edit movie"],
-  //       rating: Math.floor(Math.random() * 5 + 1),
-  //       text: faker.lorem.words(50),
-  //     });
-  //   expect(response.statusCode).toEqual(400);
-  //   expect(response.body).toBeInstanceOf(Object);
-  // });
-  //   it("duplicate", async () => {
-  //     const response = await request(app)
-  //       .post("/reviews")
-  //       //   .set("Authorization", `Bearer ${userToken}`)
-  //       .send({
-  //         user_id: ["duplicate name"],
-  //         movie_id: ["duplicate movie"],
-  //         rating: Math.floor(Math.random() * 5 + 1),
-  //         text: faker.lorem.words(50),
-  //       });
-  //     expect(response.statusCode).toEqual(500);
-  //     expect(response.body).toBeInstanceOf(Object);
-  //   });
-  //   it("rating or text field is empty", async () => {
-  //     const response = await request(app)
-  //       .post("/reviews")
-  //       //   .set("Authorization", `Bearer ${userToken}`)
-  //       .send({
-  //         user_id: usersaya_id,
-  //         movie_id: moviesaya_id,
-  //         rating: "",
-  //         text: "",
-  //       });
-  //     expect(response.statusCode).toEqual(500);
-  //     expect(response.body).toBeInstanceOf(Object);
-  //   });
-  //   it("user_id and movie_id not valid", async () => {
-  //     const response = await request(app)
-  //       .post("/reviews")
-  //       //   .set("Authorization", `Bearer ${userToken}`)
-  //       .send({
-  //         user_id: ["name not valid"],
-  //         movie_id: ["movie not valid"],
-  //         rating: Math.floor(Math.random() * 5 + 1),
-  //         text: faker.lorem.words(50),
-  //       });
-  //     expect(response.statusCode).toEqual(400);
-  //     expect(response.body).toBeInstanceOf(Object);
-  //   });
-  //   it("user or movie not found", async () => {
-  //     const response = await request(app)
-  //       .post("/reviews")
-  //       //   .set("Authorization", `Bearer ${userToken}`)
-  //       .send({
-  //         user_id: ["name not found"],
-  //         movie_id: ["movie not found"],
-  //         rating: Math.floor(Math.random() * 5 + 1),
-  //         text: faker.lorem.words(50),
-  //       });
-  //     expect(response.statusCode).toEqual(404);
-  //     expect(response.body).toBeInstanceOf(Object);
-  //     });
-});
+// describe("/reviews PUT", () => {
+//   it("update review", async () => {
+//     const response = await request(app)
+//       .post("/reviews")
+//       .set("Authorization", `Bearer ${userToken}`)
+//       .send({
+//         user_id: usersaya_id,
+//         movie_id: moviesaya_id,
+//         rating: Math.floor(Math.random() * 5 + 1),
+//         text: faker.lorem.words(50),
+//       });
+//     expect(response.statusCode).toEqual(201);
+//     expect(response.body).toBeInstanceOf(Object);
+//   });
+//   it("edit another user's review", async () => {
+//     const response = await request(app)
+//       .post("/reviews")
+//       .set("Authorization", `Bearer ${userToken}`)
+//       .send({
+//         user_id: ["edit another"],
+//         movie_id: ["edit another"],
+//         rating: Math.floor(Math.random() * 5 + 1),
+//         text: faker.lorem.words(50),
+//       });
+//     expect(response.statusCode).toEqual(403);
+//     expect(response.body).toBeInstanceOf(Object);
+//   });
+//   it("user_id or movie_id not valid", async () => {
+//     const response = await request(app)
+//       .post("/reviews")
+//       //   .set("Authorization", `Bearer ${userToken}`)
+//       .send({
+//         user_id: ["not a real name"],
+//         movie_id: ["not a real movie"],
+//         rating: Math.floor(Math.random() * 5 + 1),
+//         text: faker.lorem.words(50),
+//       });
+//     expect(response.statusCode).toEqual(400);
+//     expect(response.body).toBeInstanceOf(Object);
+//   });
+// it("try to edit user_id or movie_id", async () => {
+//   const response = await request(app)
+//     .post("/reviews")
+//     //   .set("Authorization", `Bearer ${userToken}`)
+//     .send({
+//       user_id: ["edit name"],
+//       movie_id: ["edit movie"],
+//       rating: Math.floor(Math.random() * 5 + 1),
+//       text: faker.lorem.words(50),
+//     });
+//   expect(response.statusCode).toEqual(400);
+//   expect(response.body).toBeInstanceOf(Object);
+// });
+//   it("duplicate", async () => {
+//     const response = await request(app)
+//       .post("/reviews")
+//       //   .set("Authorization", `Bearer ${userToken}`)
+//       .send({
+//         user_id: ["duplicate name"],
+//         movie_id: ["duplicate movie"],
+//         rating: Math.floor(Math.random() * 5 + 1),
+//         text: faker.lorem.words(50),
+//       });
+//     expect(response.statusCode).toEqual(500);
+//     expect(response.body).toBeInstanceOf(Object);
+//   });
+//   it("rating or text field is empty", async () => {
+//     const response = await request(app)
+//       .post("/reviews")
+//       //   .set("Authorization", `Bearer ${userToken}`)
+//       .send({
+//         user_id: usersaya_id,
+//         movie_id: moviesaya_id,
+//         rating: "",
+//         text: "",
+//       });
+//     expect(response.statusCode).toEqual(500);
+//     expect(response.body).toBeInstanceOf(Object);
+//   });
+//   it("user_id and movie_id not valid", async () => {
+//     const response = await request(app)
+//       .post("/reviews")
+//       //   .set("Authorization", `Bearer ${userToken}`)
+//       .send({
+//         user_id: ["name not valid"],
+//         movie_id: ["movie not valid"],
+//         rating: Math.floor(Math.random() * 5 + 1),
+//         text: faker.lorem.words(50),
+//       });
+//     expect(response.statusCode).toEqual(400);
+//     expect(response.body).toBeInstanceOf(Object);
+//   });
+//   it("user or movie not found", async () => {
+//     const response = await request(app)
+//       .post("/reviews")
+//       //   .set("Authorization", `Bearer ${userToken}`)
+//       .send({
+//         user_id: ["name not found"],
+//         movie_id: ["movie not found"],
+//         rating: Math.floor(Math.random() * 5 + 1),
+//         text: faker.lorem.words(50),
+//       });
+//     expect(response.statusCode).toEqual(404);
+//     expect(response.body).toBeInstanceOf(Object);
+//     });
+// });
