@@ -28,7 +28,6 @@ const movieSchema = new mongoose.Schema(
     posterImage: {
       type: String,
       required: false,
-      get: getImage,
       default: "https://i.imgur.com/hXgKBGQ.jpg",
     },
     releaseDate: {
