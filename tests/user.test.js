@@ -12,13 +12,13 @@ beforeAll(async () => {
 
   const user1 = await user.create({
     fullname: faker.name.findName(),
-    email: faker.internet.email(),
+    email: "unittest@email.com",
     password: "Oke12345!",
   });
 
   const admin = await user.create({
     fullname: faker.name.findName(),
-    email: faker.internet.email(),
+    email: "admintest@email.com",
     password: "Oke12345!",
     role: "admin",
   });
@@ -92,7 +92,7 @@ describe("User Signup", () => {
 describe("User Signin", () => {
   it("Signin success", async () => {
     const res = await request(app).post("/user/signin").send({
-      email: "testing1@gmail.com",
+      email: "unittest@email.com",
       password: "Oke12345!",
     });
     expect(res.statusCode).toEqual(200);
@@ -156,7 +156,7 @@ describe("Update User", () => {
       .set("Authorization", `Bearer ${userToken}`)
       .send({
         fullname: faker.name.findName(),
-        email: "testing1@gmail.com",
+        email: data[0].email,
         password: "Oke12345!",
       });
     expect(res.statusCode).toEqual(500);
