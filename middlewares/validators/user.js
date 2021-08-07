@@ -22,26 +22,23 @@ exports.userValidator = async (req, res, next) => {
     }
 
     if (req.files) {
-      const file = req.files.photo;
-
-      if (!file.mimetype.startsWith("image")) {
-        errorMessages.push("File must be an image");
+      if (
+        !req.files.photo.mimetype.startsWith("image") ||
+        req.files.photo.size > 2000000
+      ) {
+        errorMessages.push("File must be an image and less than 2MB");
       }
 
-      if (file.size > 2000000) {
-        errorMessages.push("Image must be less than 2MB");
-      }
+      const move = promisify(req.files.photo.mv);
 
-      file.name = new Date().getTime() + "_" + file.name;
+      await move(
+        `./images/users/${new Date().getTime() + "_" + req.files.photo.name}`
+      );
 
-      const move = promisify(file.mv);
-
-      await move(`./public/users/${file.name}`);
-
-      req.body.photo = file.name;
+      req.body.photo = new Date().getTime() + "_" + req.files.photo.name;
     }
     if (errorMessages.length > 0) {
-      return next({ statusCode: 404, messages: errorMessages });
+      return next({ statusCode: 400, messages: errorMessages });
     }
 
     next();

@@ -250,7 +250,7 @@ describe("/movies GET", () => {
   });
 
   it("Get movies by title", async () => {
-    const response = await request(app).get("/movies/search?title=ultr");
+    const response = await request(app).get("/movies/search?title=a");
 
     expect(response.statusCode).toEqual(200);
     expect(response.body).toBeInstanceOf(Object);
@@ -258,7 +258,7 @@ describe("/movies GET", () => {
 
   it("Get movies by title with page and limit params", async () => {
     const response = await request(app).get(
-      "/movies/search?title=ave&page=2&limit=2"
+      "/movies/search?title=a&page=2&limit=2"
     );
 
     expect(response.statusCode).toEqual(200);
@@ -267,7 +267,7 @@ describe("/movies GET", () => {
 
   it("Get movies by title with page, limit, sort_by, and sort_order params", async () => {
     const response = await request(app).get(
-      "/movies/search?title=ave&page=2&limit=2&sort_order=asc&sort_by=title"
+      "/movies/search?title=a&page=2&limit=2&sort_order=asc&sort_by=title"
     );
 
     expect(response.statusCode).toEqual(200);
@@ -296,6 +296,13 @@ describe("/movies GET", () => {
     const randomMovieId = data[0][0]._id;
 
     const response = await request(app).get(`/movies/${randomMovieId}`);
+
+    expect(response.statusCode).toEqual(200);
+    expect(response.body).toBeInstanceOf(Object);
+  });
+
+  it("Get movies count", async () => {
+    const response = await request(app).get(`/movies/count`);
 
     expect(response.statusCode).toEqual(200);
     expect(response.body).toBeInstanceOf(Object);
