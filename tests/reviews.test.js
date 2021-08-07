@@ -129,7 +129,7 @@ describe("/reviews GET", () => {
 
     expect(response.statusCode).toEqual(200);
     expect(response.body).toBeInstanceOf(Object);
-  });
+  }, 60000);
 
   it("review routes not found", async () => {
     const response = await request(app).get("/review/");
