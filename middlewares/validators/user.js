@@ -38,7 +38,7 @@ exports.userValidator = async (req, res, next) => {
       req.body.photo = new Date().getTime() + "_" + req.files.photo.name;
     }
     if (errorMessages.length > 0) {
-      return next({ statusCode: 404, messages: errorMessages });
+      return next({ statusCode: 400, messages: errorMessages });
     }
 
     next();
