@@ -50,6 +50,7 @@ const movieSchema = new mongoose.Schema(
     },
     averageRating: {
       type: Number,
+      default: 1,
       min: [1, "Rating must be at least 1"],
       max: [5, "Rating must can not be more than 5"],
     },
@@ -78,14 +79,6 @@ movieSchema.virtual("reviews", {
   foreignField: "movie_id",
   justOne: false,
 });
-
-function getImage(image) {
-  if (!image || image.includes("https") || image.includes("http")) {
-    return image;
-  }
-
-  return `/posters/${image}`;
-}
 
 // Enable soft delete, it will make delete column automaticly
 movieSchema.plugin(mongooseDelete, { overrideMethods: "all" });
