@@ -7,10 +7,6 @@ let data = [];
 let userToken = "";
 let adminToken = "";
 
-beforeEach(async () => {
-  jest.setTimeout(60000);
-});
-
 beforeAll(async () => {
   data = await user.find();
 
