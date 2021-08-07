@@ -10,8 +10,11 @@ let userToken = "";
 let usersaya_id = "";
 let moviesaya_id = "";
 
+beforeEach(async () => {
+  jest.setTimeout(60000);
+});
+
 beforeAll(async () => {
-  jest.setTimeout(60000); // 1 second
   const usersaya = await user.create({
     fullname: faker.name.findName(),
     email: faker.internet.email(),

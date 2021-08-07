@@ -9,9 +9,11 @@ let data = [];
 let userToken = "";
 let adminToken = "";
 
-beforeAll(async () => {
-  jest.setTimeout(60000); // 1 second
+beforeEach(async () => {
+  jest.setTimeout(60000);
+});
 
+beforeAll(async () => {
   data = await Promise.all([Movie.find()]);
   // create user and admin
   const employee = await user.create({

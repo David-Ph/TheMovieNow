@@ -7,9 +7,11 @@ let data = [];
 let userToken = "";
 let adminToken = "";
 
-beforeAll(async () => {
-  jest.setTimeout(60000); // 1 second
+beforeEach(async () => {
+  jest.setTimeout(60000);
+});
 
+beforeAll(async () => {
   data = await user.find();
 
   const user1 = await user.create({
