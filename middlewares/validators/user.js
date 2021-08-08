@@ -5,19 +5,26 @@ exports.userValidator = async (req, res, next) => {
   try {
     const errorMessages = [];
 
-    if (validator.isEmpty(req.body.fullname)) {
-      errorMessages.push("Name can not be empty");
+    if (req.body.fullname && validator.isInt(req.body.fullname)) {
+      errorMessages.push("Name has to be a string");
     }
 
-    if (req.body.fullname.length < 3) {
+    if (
+      req.body.fullname &&
+      !validator.isAlphanumeric(req.body.fullname, "en-US", { ignore: "._- " })
+    ) {
+      errorMessages.push("Name can only contains letters and numbers");
+    }
+
+    if (req.body.fullname && req.body.fullname.length < 3) {
       errorMessages.push("Fullname characters minimal is 3");
     }
 
-    if (!validator.isEmail(req.body.email)) {
+    if (req.body.email && !validator.isEmail(req.body.email)) {
       errorMessages.push("email is not valid");
     }
 
-    if (!validator.isStrongPassword(req.body.password)) {
+    if (req.body.password && !validator.isStrongPassword(req.body.password)) {
       errorMessages.push("password is not strong enough");
     }
 

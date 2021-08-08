@@ -163,12 +163,25 @@ describe("Update User", () => {
     expect(res.body).toBeInstanceOf(Object);
   });
 
-  it("empty fullname should fail", async () => {
+  it("fullname that contains only number should fail", async () => {
     const res = await request(app)
       .put("/user/edit")
       .set("Authorization", `Bearer ${userToken}`)
       .send({
-        fullname: "",
+        fullname: "123123",
+        email: faker.internet.email(),
+        password: "Oke12345!",
+      });
+    expect(res.statusCode).toEqual(400);
+    expect(res.body).toBeInstanceOf(Object);
+  });
+
+  it("fullname that contains symbols should fail", async () => {
+    const res = await request(app)
+      .put("/user/edit")
+      .set("Authorization", `Bearer ${userToken}`)
+      .send({
+        fullname: "&^&^&^&",
         email: faker.internet.email(),
         password: "Oke12345!",
       });
