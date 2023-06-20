@@ -16,6 +16,8 @@ An API for an app for users to keep up with the latest movies and create reviews
 * **Backend API link is no longer deployed, so the mobile app and web will most likely not show any data**
 * [API Documentation](https://documenter.getpostman.com/view/14556972/TzseKSTj)
 * [Mobile APK](https://drive.google.com/file/d/1P4IYfuZEYamqeLUtsFRrHlbPSm5gOl4H/view)
+* [Golang version of this project](https://github.com/David-Ph/go-movies)
+* [Laravel version of this project](https://github.com/David-Ph/practice/tree/main/technologies/laravel/restful-api)
 * [Web](https://gmdbteam-a.herokuapp.com/)
 
 
